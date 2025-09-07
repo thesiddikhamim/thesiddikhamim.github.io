@@ -30,8 +30,8 @@
       scroll-behavior: smooth;
     }
     .blob-image-container {
-    width: 450px;  /* Adjust width as needed */
-    height: 450px; /* Adjust height as needed */
+    width: 350px;  /* Adjust width as needed */
+    height: 350px; /* Adjust height as needed */
     background-color: #8A2BE2; /* The purple background color from the example */
     
     /* This is the magic property that creates the blob shape! */
