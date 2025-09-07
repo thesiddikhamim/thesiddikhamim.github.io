@@ -1,2 +1,2 @@
 # portfolio
-[https://abubakkarhamim.github.io/portfolio/](https://abubakkarhamim.github.io/)
+[https://abubakkarhamim.github.io/](https://abubakkarhamim.github.io/)
