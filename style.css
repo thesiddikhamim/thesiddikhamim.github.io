@@ -26,9 +26,51 @@
       background-color: white;
       color: var(--text-color);
       line-height: 1.6;
-      font-family: 'Inter', sans-serif;
+      font-family: 'JetBrains Mono', 'Inter', sans-serif;
       scroll-behavior: smooth;
     }
+    .blob-image-container {
+    width: 450px;  /* Adjust width as needed */
+    height: 450px; /* Adjust height as needed */
+    background-color: #8A2BE2; /* The purple background color from the example */
+    
+    /* This is the magic property that creates the blob shape! */
+    /* You can generate new shapes at websites like "fancy-border-radius.com" */
+    border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
+
+    /* This is crucial: it cuts off any part of the image that goes outside the blob shape */
+    overflow: hidden;
+
+    /* (Optional) Add a subtle animation to make the blob change shape slowly */
+    animation: morph 8s ease-in-out infinite;
+    transition: border-radius 1s ease-in-out;
+}
+
+.blob-image-container img {
+    width: 80%;
+    height: 100%;
+    align-self: center;
+    margin-left: 10%;
+    
+    /* This ensures your image covers the entire blob area without being stretched or squashed */
+    object-fit: cover;
+}
+
+
+/* (Optional) Keyframes for the shape-shifting animation */
+/* If you don't want the animation, you can delete this entire @keyframes block */
+@keyframes morph {
+    0% {
+        border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
+    }
+    50% {
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    100% {
+        border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
+    }
+}
+
 
     /* Container */
     .container {
