@@ -302,8 +302,102 @@
       box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
     }
 
-    
+    /* --- Certificates Section --- */
+#certificates {
+  padding: 40px 5%;
+  text-align: center;
+}
 
+#certificates h2 {
+  font-size: 2em;
+  margin-bottom: 40px;
+}
+
+.certificates-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  text-align: left;
+}
+
+.certificate-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; /* This is new */
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* New styles for the certificate image */
+.certificate-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* New styles for the card content area */
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Makes the card content fill available space */
+}
+
+.certificate-card h3 {
+  font-size: 1.2em;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.certificate-card .issuer {
+  font-size: 0.9em;
+  color: #555;
+  margin: 0;
+  flex-grow: 1; /* Pushes the button to the bottom */
+}
+
+.credential-button {
+  display: block;
+  background-color: #333;
+  color: #fff;
+  padding: 12px 15px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Adds space above the button */
+}
+
+.credential-button:hover {
+  background-color: #555;
+}
+
+/* Adjusting footer social icons for better consistency */
+.social-container a svg {
+  width: 24px; /* Fixed size for all icons */
+  height: 24px;
+  fill: #333; /* A neutral color */
+  transition: fill 0.3s ease;
+}
+
+.social-container a:hover svg {
+  fill: #007bff; /* Change color on hover */
+}
+
+/* Removing inline styles from HTML for better practice */
+.social-container a {
+  display: inline-block;
+  margin: 0 10px;
+  /* Remove width and height from here if you've set it on the SVG */
+}
     /* Mobile Styles */
     @media screen and (max-width: 480px) {
       header {
