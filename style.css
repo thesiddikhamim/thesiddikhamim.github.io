@@ -26,7 +26,7 @@
       background-color: white;
       color: var(--text-color);
       line-height: 1.6;
-      font-family: 'JetBrains Mono', 'Inter', sans-serif;
+      font-family: 'Inter', 'JetBrains Mono', sans-serif;
       scroll-behavior: smooth;
     }
     .blob-image-container {
