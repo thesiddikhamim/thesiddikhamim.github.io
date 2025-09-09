@@ -128,7 +128,13 @@
       transition: var(--transition);
       margin-right: 0;
     }
-
+    @media screen and (max-width: 480px) {
+    .header-image img {
+      width: 80%;       /* fit nicely on small screen */
+      height: auto;
+      object-position: center;
+      }
+    }
     .header-image:hover img {
       transform: scale(1);
     }
