@@ -749,3 +749,122 @@
   gap: 1rem;
  gap: 24px; padding: 16px 0;
 }
+
+/* Add after your existing CSS, before the media queries */
+
+/* Skills Accordion Section */
+.skills-section {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    
+    padding: 20%;
+    padding-top: 5%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Also update these specific elements to ensure consistency */
+.title-group h3,
+.skill p,
+.skill span {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+    
+}
+
+.accordion-item {
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    gap: 1rem;
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: #8A2BE2;
+    width: 30px;
+    text-align: center;
+}
+
+.title-group {
+    flex-grow: 1;
+}
+
+.title-group h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.title-group span {
+    font-size: 0.875rem;
+    color: #000000;
+}
+
+.chevron {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    transition: transform 0.3s ease-in-out;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+    padding: 0 1.5rem;
+}
+
+.skill {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+.skill p {
+    margin: 0;
+    width: 150px;
+    flex-shrink: 0;
+}
+
+.skill span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.progress-container {
+    flex-grow: 1;
+    background-color: var(--border-color);
+    border-radius: 999px;
+    height: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4F46E5, #A855F7);
+    border-radius: 999px;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 500px;
+    padding: 1rem 1.5rem;
+}
+
+.accordion-item.active .chevron {
+    transform: rotate(180deg);
+}
+
