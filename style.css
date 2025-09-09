@@ -201,8 +201,9 @@
       font-size: 1.1rem;
       line-height: 1.8;
       color: var(--text-secondary);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       max-width: 90%;
+      font-family: 'Merriweather';
     }
 
     /* Animations */
