@@ -26,7 +26,7 @@
       background-color: white;
       color: var(--text-color);
       line-height: 1.6;
-      font-family: 'JetBrains Mono', 'Inter', sans-serif;
+      font-family: sans-serif;
       scroll-behavior: smooth;
     }
     .blob-image-container {
@@ -351,6 +351,7 @@
 #certificates {
   padding: 40px 5%;
   text-align: center;
+  
 }
 
 #certificates h2 {
@@ -405,6 +406,7 @@
   font-size: 0.9em;
   color: #555;
   margin: 0;
+  font-family: 'JetBrains Mono' ;
   flex-grow: 1; /* Pushes the button to the bottom */
 }
 
