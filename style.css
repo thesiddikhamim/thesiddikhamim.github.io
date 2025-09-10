@@ -775,8 +775,8 @@
 }
 
 .accordion-item {
-    background-color: var(--secondary-color);
-    border: 1px solid var(--border-color);
+    background-color: white;
+   
     border-radius: 12px;
 }
 
