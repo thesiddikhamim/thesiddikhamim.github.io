@@ -161,7 +161,7 @@
       color: var(--text-secondary);
       margin-bottom: 1.5rem;
       max-width: 90%;
-      font-family: 'Merriweather';
+      font-family: 'Geist Mono', 'Merriweather';
     }
 
     /* Animations */
