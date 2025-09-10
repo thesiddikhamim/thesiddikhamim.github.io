@@ -69,7 +69,7 @@
   height: 100%;
   overflow: hidden;
   opacity: 0;
-  animation: slideIn 1s ease forwards;
+  animation: slideIn 3s ease forwards;
   display: flex;
   align-items: center;
   justify-content: flex-end;
