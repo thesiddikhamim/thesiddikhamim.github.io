@@ -29,49 +29,7 @@
       font-family: sans-serif;
       scroll-behavior: smooth;
     }
-    .blob-image-container {
-    width: 350px;  /* Adjust width as needed */
-    height: 350px; /* Adjust height as needed */
-    background-color: #8A2BE2; /* The purple background color from the example */
-    
-    /* This is the magic property that creates the blob shape! */
-    /* You can generate new shapes at websites like "fancy-border-radius.com" */
-    border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
-
-    /* This is crucial: it cuts off any part of the image that goes outside the blob shape */
-    overflow: hidden;
-
-    /* (Optional) Add a subtle animation to make the blob change shape slowly */
-    animation: morph 8s ease-in-out infinite;
-    transition: border-radius 1s ease-in-out;
-}
-
-.blob-image-container img {
-    width: 80%;
-    height: 100%;
-    align-self: center;
-    margin-left: 10%;
-    
-    /* This ensures your image covers the entire blob area without being stretched or squashed */
-    object-fit: cover;
-}
-
-
-/* (Optional) Keyframes for the shape-shifting animation */
-/* If you don't want the animation, you can delete this entire @keyframes block */
-@keyframes morph {
-    0% {
-        border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
-    }
-    50% {
-        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-    }
-    100% {
-        border-radius: 45% 55% 62% 38% / 51% 41% 59% 49%;
-    }
-}
-
-
+  
     /* Container */
     .container {
       width: 100%;
@@ -235,119 +193,23 @@
 
     /* Headings */
     h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
+      font-family:  'Poppins';
+      text-align: center;
+      font-size: 2.3rem;
       font-weight: 500;
       margin-bottom: 2rem;
       color: var(--primary-color);
     }
 
     h3 {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.5rem;
       font-weight: 500;
       margin-bottom: 1rem;
       color: var(--primary-color);
     }
 
-    /* Bio and Approach Section Styles */
-    .bio-approach-container {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 0;
-      width: 100%;
-    }
-
-    .bio-section {
-      display: flex;
-      align-items: stretch;
-      min-height: 100vh;
-    }
-
-    .bio-image-container {
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .bio-image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .bio-content {
-      flex: 1;
-      padding: 4rem;
-      background-color: #1a1a1a;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .bio-content h2, 
-    .approach-content h2 {
-      color: white;
-      font-size: 1.5rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .bio-content p, 
-    .approach-content p {
-      color: #f8f8f8;
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      opacity: 0.9;
-    }
-
-    .section-divider {
-      width: 100%;
-      height: 1px;
-      background-color: rgba(255, 255, 255, 0.1);
-      margin: 2rem 0;
-    }
-
-    /* Bio Section */
-    #bio-container {
-      display: flex;
-      gap: 4rem;
-      padding: 5rem;
-      background: var(--secondary-color);
-    }
-
-    #bio-text {
-      flex: 1;
-      padding: 2rem;
-    }
-
-    /* Cards and Items */
-    .education-item,
-    .course-item,
-    .skill-item,
-    .project-item,
-    .activity-item {
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border-radius: 8px;
-      background: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-      transition: var(--transition);
-    }
-
-    .education-item:hover,
-    .course-item:hover,
-    .skill-item:hover,
-    .project-item:hover,
-    .activity-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-    }
-
+    
     /* --- Certificates Section --- */
 #certificates {
   padding: 40px 5%;
