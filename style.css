@@ -177,18 +177,18 @@
 
     /* Section Styles */
     section {
-      padding: 5rem 0;
-      margin: 0;
-      width: 100vw;
-      position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-    }
+  padding: 5rem 0;
+  margin: 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
 
     section:nth-child(even) {
-      background-color: var(--secondary-color);
+      background-color: white;
     }
 
     /* Headings */
@@ -775,3 +775,78 @@
     }
 }
 
+
+
+
+/* tech containder */
+
+.tech-container {
+        font-family: 'Inter', sans-serif;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        margin: 4rem auto; /* This centers the container */
+        padding: 0 1.5rem; /* Adds horizontal padding for smaller screens */
+        /* Reset properties inherited from the 'section' tag */
+        position: static;
+        left: auto;
+        right: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Heading Style */
+  
+
+
+    /* Paragraph Style */
+    .tech-container p {
+        font-size: 1rem; /* 16px */
+        color: #4B5563; /* Gray color for the paragraph */
+        line-height: 1.6;
+        margin-bottom: 2.5rem; /* 40px */
+    }
+
+    /* Grid container for the technology badges */
+    .tech-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem; /* 12px */
+    }
+
+    /* Individual technology badge style */
+    .tech-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem; /* 8px */
+        padding: 0.5rem 1rem; /* 8px 16px */
+        background-color: #F9FAFB; /* Very light gray background */
+        border: 1px solid #E5E7EB; /* Light gray border */
+        border-radius: 0.5rem; /* 8px */
+        font-size: 0.875rem; /* 14px */
+        font-weight: 500;
+        color: #374151;
+        transition: all 0.2s ease-in-out;
+        cursor: default;
+    }
+
+    /* Hover effect for the badges */
+    .tech-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Icon style within the badge */
+    .tech-badge img {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Style for the final text */
+    .tech-container .more-text {
+        font-size: 1rem;
+        color: #6B7280; /* Lighter gray for the final text */
+        margin-top: 2.5rem; /* 40px */
+        margin-bottom: 0;
+    }
