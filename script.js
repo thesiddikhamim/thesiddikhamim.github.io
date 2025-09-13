@@ -1,13 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // --- Refined Accordion Logic ---
     const accordionHeaders = document.querySelectorAll(".accordion-header");
 
     accordionHeaders.forEach(header => {
         header.addEventListener("click", () => {
-            // Find the parent accordion-item
-            const accordionItem = header.parentElement;
+            const currentItem = header.parentElement;
+            const wasActive = currentItem.classList.contains("active");
 
-            // Toggle the 'active' class on the parent item
-            accordionItem.classList.toggle("active");
+            // Close all accordion items first
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // If the clicked item wasn't the one already active, open it
+            if (!wasActive) {
+                currentItem.classList.add("active");
+            }
         });
+    });
+
+    // --- Improved Mobile Navigation Logic ---
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+    const body = document.body;
+
+    const closeMenu = () => {
+        hamburger.classList.remove("active");
+        navMenu.classList.remove("active");
+        body.classList.remove("no-scroll");
+    };
+
+    hamburger.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevents the click from bubbling up to the body
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+        body.classList.toggle("no-scroll");
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", closeMenu));
+    
+    // Close menu when clicking outside of it
+    body.addEventListener('click', (e) => {
+        if (hamburger.classList.contains('active') && !navMenu.contains(e.target)) {
+            closeMenu();
+        }
     });
 });
