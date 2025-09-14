@@ -635,25 +635,44 @@ h3 {
 footer {
     background-color: white;
     color: rgb(0, 0, 0);
-    padding: 3rem;
+    padding: 3rem 1.5rem; /* Added horizontal padding */
     text-align: center;
 }
 
 footer p {
     font-size: 1rem;
     opacity: 0.8;
+    margin-top: 1.5rem; /* Add space above email */
+    word-wrap: break-word; /* Ensure email doesn't overflow */
 }
 
 .social-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    gap: 24px;
-    padding: 16px 0;
+    flex-wrap: wrap; /* Allow icons to wrap on smaller screens */
+    gap: 1rem; /* Consistent gap between icons */
+    padding: 1rem 0;
 }
 
-/* Add after your existing CSS, before the media queries */
+.social-container a {
+    display: inline-flex; /* Use flex to center the SVG inside */
+    align-items: center;
+    justify-content: center;
+    color: #333; /* Use color for the SVG fill */
+    transition: color 0.3s ease;
+}
+
+.social-container a:hover {
+    color: #c6b7d3; /* Updated hover color to match theme */
+}
+
+.social-container a svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor; /* Inherit color from the parent 'a' tag */
+}
+
 
 /* Skills Accordion Section */
 .skills-section {
