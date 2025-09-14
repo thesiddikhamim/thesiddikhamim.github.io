@@ -633,7 +633,7 @@ h3 {
 
 /* Footer */
 footer {
-    background-color: white;
+    background-color: rgb(28, 20, 20);
     color: rgb(0, 0, 0);
     padding: 3rem 1.5rem; /* Added horizontal padding */
     text-align: center;
@@ -668,9 +668,9 @@ footer p {
 }
 
 .social-container a svg {
-    width: 28px;
-    height: 28px;
-    fill: currentColor; /* Inherit color from the parent 'a' tag */
+    width: 2rem;
+    height: 2rem;
+    fill: white; /* Inherit color from the parent 'a' tag */
 }
 
 
