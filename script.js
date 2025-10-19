@@ -46,4 +46,32 @@ document.addEventListener("DOMContentLoaded", () => {
             closeMenu();
         }
     });
+
+    // --- "Show More" Certificates Logic ---
+    const certsContainer = document.querySelector('.certificates-container');
+    if (certsContainer) {
+        const showMoreBtn = document.getElementById('show-more-certs-btn');
+        const certificateCards = Array.from(certsContainer.getElementsByClassName('certificate-card'));
+        const itemsPerLoad = 4;
+        let visibleItems = itemsPerLoad;
+
+        // Initially hide all cards beyond the initial limit
+        certificateCards.forEach((card, index) => {
+            if (index >= visibleItems) {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Hide the "Show More" button if there are not enough cards to hide
+        if (certificateCards.length <= visibleItems) {
+            showMoreBtn.style.display = 'none';
+        }
+
+        showMoreBtn.addEventListener('click', () => {
+            const nextVisibleItems = visibleItems + itemsPerLoad;
+            certificateCards.slice(visibleItems, nextVisibleItems).forEach(card => card.classList.remove('hidden'));
+            visibleItems = nextVisibleItems;
+            if (visibleItems >= certificateCards.length) showMoreBtn.style.display = 'none';
+        });
+    }
 });

@@ -322,6 +322,107 @@ h3 {
     background-color: #555;
 }
 
+/* Styles for the "Show More" button and hidden certificates */
+.certificate-card.hidden {
+    display: none;
+}
+
+.show-more-button {
+    display: block;
+    margin: 40px auto 0; /* Increased top margin for more space */
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600; /* Slightly bolder */
+    color: #8A2BE2; /* Purple text to match the border */
+    background-color: transparent;
+    border: 2px solid #8A2BE2; /* Purple outline */
+    border-radius: 8px; /* Slightly more rounded corners */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    letter-spacing: 0.5px;
+}
+
+.show-more-button:hover {
+    background-color: #8A2BE2; /* Fill with purple on hover */
+    color: #fff; /* White text on hover */
+    transform: translateY(-3px); /* A more noticeable lift */
+    box-shadow: 0 6px 12px rgba(138, 43, 226, 0.3); /* Soft purple shadow */
+}
+
+/* --- Projects Section --- */
+#projects {
+    padding: 40px 5%;
+    text-align: center;
+    background-color: #f8f8f8; /* A slightly different background to distinguish it */
+}
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Reduced min width */
+    gap: 25px; /* Reduced the gap slightly */
+    text-align: left;
+}
+
+.project-card {
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10; /* Gives images a consistent shape */
+    object-fit: cover;
+    display: block;
+}
+
+.project-description {
+    font-size: 0.95em;
+    color: #555;
+    margin: 0;
+    font-family: 'Geist Mono', 'Merriweather';
+    flex-grow: 1; /* Pushes the buttons to the bottom */
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px; /* Adds space above the buttons */
+}
+
+.project-button,
+.project-button-secondary {
+    flex: 1; /* Make buttons share space equally */
+    padding: 12px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.project-button {
+    background-color: #8A2BE2;
+    color: #fff;
+}
+
+.project-button-secondary {
+    background-color: transparent;
+    color: #8A2BE2;
+    border-color: #8A2BE2;
+}
+
 /* Adjusting footer social icons for better consistency */
 .social-container a svg {
     width: 24px;
