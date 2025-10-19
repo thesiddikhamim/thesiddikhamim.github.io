@@ -379,10 +379,9 @@ h3 {
 }
 
 .project-image {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10; /* Gives images a consistent shape */
-    object-fit: cover;
+    width: auto;
+    height: auto; /* Gives images a consistent shape */
+
     display: block;
 }
 
