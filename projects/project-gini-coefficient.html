@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Project: Gini Coefficient in Bangladesh - Md Abu Bakkar Siddik Hamim</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+        <style>
+            .blog-container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                font-family: 'Merriweather', serif;
+            }
+            .blog-header h1 {
+                font-family: 'Poppins', sans-serif;
+                font-size: 2.5rem;
+                margin-bottom: 2rem; /* Space after the title */
+            }
+            .post-meta {
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem; /* Space after the date */
+            }
+            .blog-content img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                margin: 1rem 0 2rem 0;
+            }
+            .blog-content p {
+                line-height: 1.8;
+                margin-bottom: 1.5rem;
+                font-size: 1.1rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="nav-logo">Hamim.</a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html#projects" class="nav-link">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#certificates" class="nav-link">Certificates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#skills" class="nav-link">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contact" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+
+            <main class="blog-container">
+                <header class="blog-header">
+                    <p class="post-meta">Published on <time datetime="2024-05-20">May 20, 2024</time> &bull; Data Analysis</p>
+                    <h1>Gini Coefficient Trend in Bangladesh</h1>
+                </header>
+
+                <article class="blog-content">
+                    <p>To complement the analysis on income shares, this project focuses on the Gini coefficient, a standard measure of statistical dispersion intended to represent the income or wealth inequality within a nation. A Gini coefficient of 0 represents perfect equality, while a coefficient of 1 implies maximal inequality.</p>
+                    
+                    <img src="projects/gini.jpg" alt="Chart showing the Gini Coefficient in Bangladesh from 1983 to 2022">
+                    
+                    <h2>Key Findings</h2>
+                    <p>The data, sourced from the Bangladesh Bureau of Statistics (BBS), shows a clear and concerning upward trend. The Gini coefficient has risen from 0.36 in 1983-84 to 0.50 in 2022. This quantitative measure confirms the qualitative story told by the income share chart: economic inequality in Bangladesh has significantly worsened over the past 40 years.</p>
+
+                    <h2>Technologies Used</h2>
+                    <p>This visualization was also created using Python's data science stack: Pandas for data handling, and Matplotlib/Seaborn for plotting. The design focuses on a clean line chart to effectively show the trend over time, with annotations to make the Gini scale understandable to a broader audience.</p>
+
+                    <div class="project-links">
+                        <a href="https://github.com/thesiddikhamim/Data-Analysis-Projects/tree/main/Bangladesh%20Income%20Inequality" class="project-button-secondary" target="_blank">View Source Code</a>
+                    </div>
+                </article>
+            </main>
+
+        </div>
+        <script src="script.js"></script>
+    </body>
+
+</html>
