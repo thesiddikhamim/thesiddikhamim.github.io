@@ -300,13 +300,45 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     document.querySelectorAll('.blog-content img').forEach(image => {
+        let touchStartTime = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let hasMoved = false;
+
         image.addEventListener('click', (e) => {
             openImageModal(e.currentTarget.src);
         });
+
         image.addEventListener('touchstart', (e) => {
-            // prevent 300ms delay and native zoom while opening
-            e.preventDefault();
-            openImageModal(e.currentTarget.src);
+            touchStartTime = Date.now();
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            hasMoved = false;
+        }, { passive: true });
+
+        image.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const deltaX = Math.abs(touch.clientX - touchStartX);
+                const deltaY = Math.abs(touch.clientY - touchStartY);
+                
+                // If the touch has moved more than 10px, consider it a scroll
+                if (deltaX > 10 || deltaY > 10) {
+                    hasMoved = true;
+                }
+            }
+        }, { passive: true });
+
+        image.addEventListener('touchend', (e) => {
+            const touchDuration = Date.now() - touchStartTime;
+            const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartX);
+            const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+            
+            // Only open zoom if it was a quick tap (less than 300ms) and didn't move much
+            if (touchDuration < 300 && !hasMoved && deltaX < 10 && deltaY < 10) {
+                e.preventDefault();
+                openImageModal(image.src);
+            }
         }, { passive: false });
     });
 });
