@@ -159,10 +159,6 @@ header p {
         max-width: 100%;
     }
 
-    .header-content h1, .header-content p {
-        animation: fadeIn 1s ease-out forwards;
-        animation-timeline: view();
-    }
 }
 
 /* Tablet Styles */
