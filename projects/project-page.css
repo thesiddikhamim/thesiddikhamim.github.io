@@ -1,7 +1,7 @@
 .blog-container {
     max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
+    margin: 0 auto; /* Center the container */
+    padding: 0 2rem 2rem; /* Remove top padding */
     font-family: 'Merriweather', serif;
 }
 
@@ -10,13 +10,6 @@
     font-size: 2.5rem;
     margin-bottom: 2rem;
     /* Space after the title */
-}
-
-.post-meta {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    /* Space after the date */
 }
 
 .blog-content img {
