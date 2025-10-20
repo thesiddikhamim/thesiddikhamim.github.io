@@ -47,31 +47,161 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- "Show More" Certificates Logic ---
-    const certsContainer = document.querySelector('.certificates-container');
-    if (certsContainer) {
-        const showMoreBtn = document.getElementById('show-more-certs-btn');
-        const certificateCards = Array.from(certsContainer.getElementsByClassName('certificate-card'));
+    // --- Enhanced "Show More" Certificates Logic ---
+    const showMoreBtn = document.getElementById('show-more-certs-btn');
+    if (showMoreBtn) {
+        const certsContainer = document.querySelector('.certificates-container');
+        const allCards = Array.from(certsContainer.getElementsByClassName('certificate-card'));
+        const progressBar = document.getElementById('certificates-progress-bar');
         const itemsPerLoad = 4;
-        let visibleItems = itemsPerLoad;
+        let currentlyVisible = itemsPerLoad;
+        let isAnimating = false;
 
-        // Initially hide all cards beyond the initial limit
-        certificateCards.forEach((card, index) => {
-            if (index >= visibleItems) {
-                card.classList.add('hidden');
+        // Initialize cards with staggered animation
+        const initializeCards = () => {
+            allCards.forEach((card, index) => {
+                if (index < itemsPerLoad) {
+                    card.classList.add('visible');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        };
+
+        const updateProgressBar = () => {
+            const progress = (currentlyVisible / allCards.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        };
+
+        const showCardsWithAnimation = (startIndex, endIndex) => {
+            return new Promise((resolve) => {
+                let completed = 0;
+                const total = endIndex - startIndex;
+                
+                if (total === 0) {
+                    resolve();
+                    return;
+                }
+
+                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.remove('hidden');
+                        card.classList.add('visible');
+                        
+                        completed++;
+                        if (completed === total) {
+                            resolve();
+                        }
+                    }, index * 100); // Staggered reveal
+                });
+            });
+        };
+
+        const hideCardsWithAnimation = (startIndex, endIndex) => {
+            return new Promise((resolve) => {
+                let completed = 0;
+                const total = endIndex - startIndex;
+                
+                if (total === 0) {
+                    resolve();
+                    return;
+                }
+
+                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.remove('visible');
+                        card.classList.add('hidden');
+                        
+                        completed++;
+                        if (completed === total) {
+                            resolve();
+                        }
+                    }, index * 50); // Faster hide animation
+                });
+            });
+        };
+
+        const updateButtonState = () => {
+            if (currentlyVisible >= allCards.length) {
+                showMoreBtn.textContent = 'Show Less';
+                showMoreBtn.classList.add('less');
+            } else {
+                showMoreBtn.textContent = 'Show More';
+                showMoreBtn.classList.remove('less');
+            }
+        };
+
+        const smoothScrollToSection = () => {
+            const section = document.getElementById('certificates');
+            const sectionTop = section.offsetTop - 100; // Offset for better positioning
+            
+            window.scrollTo({
+                top: sectionTop,
+                behavior: 'smooth'
+            });
+        };
+
+        // Initial setup
+        if (allCards.length <= itemsPerLoad) {
+            showMoreBtn.style.display = 'none';
+            progressBar.style.display = 'none';
+        } else {
+            initializeCards();
+            updateProgressBar();
+            updateButtonState();
+        }
+
+        showMoreBtn.addEventListener('click', async () => {
+            if (isAnimating) return;
+            
+            isAnimating = true;
+            showMoreBtn.classList.add('loading');
+            
+            try {
+                if (currentlyVisible >= allCards.length) {
+                    // "Show Less" was clicked
+                    const hideStartIndex = itemsPerLoad;
+                    const hideEndIndex = currentlyVisible;
+                    
+                    await hideCardsWithAnimation(hideStartIndex, hideEndIndex);
+                    currentlyVisible = itemsPerLoad;
+                } else {
+                    // "Show More" was clicked
+                    const showStartIndex = currentlyVisible;
+                    const showEndIndex = Math.min(currentlyVisible + itemsPerLoad, allCards.length);
+                    
+                    await showCardsWithAnimation(showStartIndex, showEndIndex);
+                    currentlyVisible = showEndIndex;
+                    
+                    // Smooth scroll to section when showing more
+                    setTimeout(smoothScrollToSection, 300);
+                }
+                
+                updateProgressBar();
+                updateButtonState();
+            } finally {
+                showMoreBtn.classList.remove('loading');
+                isAnimating = false;
             }
         });
 
-        // Hide the "Show More" button if there are not enough cards to hide
-        if (certificateCards.length <= visibleItems) {
-            showMoreBtn.style.display = 'none';
-        }
+        // Add intersection observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        showMoreBtn.addEventListener('click', () => {
-            const nextVisibleItems = visibleItems + itemsPerLoad;
-            certificateCards.slice(visibleItems, nextVisibleItems).forEach(card => card.classList.remove('hidden'));
-            visibleItems = nextVisibleItems;
-            if (visibleItems >= certificateCards.length) showMoreBtn.style.display = 'none';
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all certificate cards
+        allCards.forEach(card => {
+            observer.observe(card);
         });
     }
 

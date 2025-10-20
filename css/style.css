@@ -160,32 +160,182 @@ h3 {
     background-color: #555;
 }
 
-/* Styles for the "Show More" button and hidden certificates */
+/* Enhanced Styles for the "Show More" button and hidden certificates */
+.certificate-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
 .certificate-card.hidden {
-    display: none;
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    border: none;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.certificate-card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Staggered animation for cards */
+.certificate-card:nth-child(1) { animation-delay: 0.1s; }
+.certificate-card:nth-child(2) { animation-delay: 0.2s; }
+.certificate-card:nth-child(3) { animation-delay: 0.3s; }
+.certificate-card:nth-child(4) { animation-delay: 0.4s; }
+.certificate-card:nth-child(5) { animation-delay: 0.5s; }
+.certificate-card:nth-child(6) { animation-delay: 0.6s; }
+.certificate-card:nth-child(7) { animation-delay: 0.7s; }
+.certificate-card:nth-child(8) { animation-delay: 0.8s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 
 .show-more-button {
     display: block;
-    margin: 40px auto 0; /* Increased top margin for more space */
-    padding: 12px 30px;
-    font-size: 1rem;
-    font-weight: 600; /* Slightly bolder */
-    color: #8A2BE2; /* Purple text to match the border */
-    background-color: transparent;
-    border: 2px solid #8A2BE2; /* Purple outline */
-    border-radius: 8px; /* Slightly more rounded corners */
+    margin: 50px auto 0;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #8A2BE2;
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
+    border: 2px solid #8A2BE2;
+    border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease; /* Smooth transition for all properties */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.1);
+}
+
+.show-more-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.show-more-button:hover::before {
+    left: 100%;
 }
 
 .show-more-button:hover {
-    background-color: #8A2BE2; /* Fill with purple on hover */
-    color: #fff; /* White text on hover */
-    transform: translateY(-3px); /* A more noticeable lift */
-    box-shadow: 0 6px 12px rgba(138, 43, 226, 0.3); /* Soft purple shadow */
+    background: linear-gradient(135deg, #8A2BE2 0%, #9932CC 100%);
+    color: #fff;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.4);
+    border-color: #9932CC;
 }
+
+.show-more-button:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+}
+
+.show-more-button.less {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #6c757d;
+    border-color: #dee2e6;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.show-more-button.less:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    color: #495057;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.show-more-button.loading {
+    pointer-events: none;
+    opacity: 0.7;
+    animation: pulse 1.5s infinite;
+}
+
+.show-more-button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Progress indicator */
+.certificates-progress {
+    width: 100%;
+    height: 4px;
+    background-color: #e9ecef;
+    border-radius: 2px;
+    margin: 20px auto;
+    overflow: hidden;
+    max-width: 300px;
+}
+
+.certificates-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #8A2BE2, #9932CC);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+}
+
+/* Section fade-in animation */
+#certificates {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 /* --- Projects Section --- */
 #projects {
