@@ -74,4 +74,30 @@ document.addEventListener("DOMContentLoaded", () => {
             if (visibleItems >= certificateCards.length) showMoreBtn.style.display = 'none';
         });
     }
+
+    // --- Image Zoom Functionality for Project Pages ---
+    document.querySelectorAll('.blog-content img').forEach(image => {
+        image.addEventListener('click', () => {
+            // Create overlay element
+            const overlay = document.createElement('div');
+            overlay.classList.add('image-zoom-overlay');
+
+            // Create image element for the overlay
+            const zoomedImage = document.createElement('img');
+            zoomedImage.src = image.src;
+
+            // Add image to overlay
+            overlay.appendChild(zoomedImage);
+
+            // Add overlay to the body
+            document.body.appendChild(overlay);
+            document.body.classList.add('no-scroll'); // Prevent background scrolling
+
+            // Remove overlay when clicked
+            overlay.addEventListener('click', () => {
+                overlay.remove();
+                document.body.classList.remove('no-scroll');
+            });
+        });
+    });
 });
