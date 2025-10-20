@@ -79,7 +79,7 @@ header p {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
     max-width: 90%;
-    font-family: 'Geist Mono', 'Merriweather';
+    font-family: 'DM sans','Geist Mono', 'Merriweather';
 }
 
 /* Animations */
