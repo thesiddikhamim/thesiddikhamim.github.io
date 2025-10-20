@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- Image Zoom Functionality for Project Pages ---
     const viewportMeta = document.querySelector('meta[name="viewport"]');
-    const originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
 
     const openImageModal = (imageSrc) => {
         const overlay = document.createElement('div');
@@ -99,9 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
             overlay.addEventListener('transitionend', () => {
                 overlay.remove();
                 document.body.classList.remove('no-scroll');
-                if (viewportMeta && originalViewportContent) {
-                    viewportMeta.setAttribute('content', originalViewportContent);
-                }
                 document.removeEventListener('keydown', handleEsc);
             }, { once: true });
         };
@@ -113,6 +109,12 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         closeButton.addEventListener('click', closeOverlay);
+
+        // Prevent background scroll/zoom on touch devices
+        overlay.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        });
+
         overlay.appendChild(zoomedImage);
         overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
@@ -122,10 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
         requestAnimationFrame(() => {
             overlay.classList.add('visible');
         });
-
-        if (viewportMeta) {
-            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }
 
         document.addEventListener('keydown', handleEsc);
     };
