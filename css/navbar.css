@@ -1,0 +1,112 @@
+/* Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #333;
+}
+
+/* Responsive Media Query */
+@media(max-width: 768px) {
+    .hamburger {
+        display: block;
+        position: relative; /* Needed for z-index to work */
+        z-index: 1001;     /* Ensure it's above the menu */
+    }
+
+    .hamburger.active .bar {
+        background-color: #333; /* Keep color consistent when active */
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: 0; /* Start from the very top */
+        height: 100vh; /* Full viewport height */
+        width: 100%;   /* Full viewport width */
+        gap: 2rem; /* Increase gap for better spacing */
+        flex-direction: column;
+        justify-content: center; /* Center items vertically */
+        align-items: center;     /* Center items horizontally */
+        background-color: rgba(255, 255, 255, 0.98); /* Slightly transparent white */
+        backdrop-filter: blur(8px); /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(8px);
+        text-align: center;
+        transition: right 0.4s ease-in-out; /* Smoother transition */
+        box-shadow: none; /* Remove shadow as it's full screen */
+    }
+
+    .nav-item {
+        margin: 0; /* Remove margin as we are using gap */
+    }
+
+    .nav-link {
+        font-size: 1.5rem; /* Larger font for full-screen menu */
+        font-weight: 600;
+    }
+
+    .nav-menu.active {
+        right: 0;
+    }
+}
