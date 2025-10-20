@@ -76,28 +76,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Image Zoom Functionality for Project Pages ---
-    document.querySelectorAll('.blog-content img').forEach(image => {
-        image.addEventListener('click', () => {
-            // Create overlay element
-            const overlay = document.createElement('div');
-            overlay.classList.add('image-zoom-overlay');
+    const handleImageZoom = (event) => {
+        // Prevent the browser from also triggering a 'click' event on touch devices
+        if (event.type === 'touchstart') {
+            event.preventDefault();
+        }
 
-            // Create image element for the overlay
-            const zoomedImage = document.createElement('img');
-            zoomedImage.src = image.src;
+        const image = event.currentTarget;
 
-            // Add image to overlay
-            overlay.appendChild(zoomedImage);
+        // Create overlay element
+        const overlay = document.createElement('div');
+        overlay.classList.add('image-zoom-overlay');
 
-            // Add overlay to the body
-            document.body.appendChild(overlay);
-            document.body.classList.add('no-scroll'); // Prevent background scrolling
+        // Create image element for the overlay
+        const zoomedImage = document.createElement('img');
+        zoomedImage.src = image.src;
 
-            // Remove overlay when clicked
-            overlay.addEventListener('click', () => {
-                overlay.remove();
-                document.body.classList.remove('no-scroll');
-            });
+        // Add image to overlay and then to the body
+        overlay.appendChild(zoomedImage);
+        document.body.appendChild(overlay);
+        document.body.classList.add('no-scroll'); // Prevent background scrolling
+
+        // Remove overlay when clicked
+        overlay.addEventListener('click', () => {
+            overlay.remove();
+            document.body.classList.remove('no-scroll');
         });
+    };
+
+    document.querySelectorAll('.blog-content img').forEach(image => {
+        image.addEventListener('click', handleImageZoom);
+        image.addEventListener('touchstart', handleImageZoom);
     });
 });
