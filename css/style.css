@@ -351,16 +351,18 @@ h3 {
 
 /* --- Projects Section --- */
 #projects {
-    padding: 40px 5%;
+    padding: 30px 5%; /* Slightly reduced vertical padding */
     text-align: center;
     background-color: #f8f8f8; /* A slightly different background to distinguish it */
 }
 
 .projects-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Reduced min width */
-    gap: 25px; /* Reduced the gap slightly */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Keep cards from getting too small */
+    gap: 20px;
     text-align: left;
+    max-width: 900px; /* Constrain the max-width of the container */
+    margin: 0 auto; /* Center the container within the section */
 }
 
 .project-card {
