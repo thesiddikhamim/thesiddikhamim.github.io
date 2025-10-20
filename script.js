@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- Image Zoom Functionality for Project Pages ---
+    const viewportMeta = document.querySelector('meta[name="viewport"]');
+    const originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
+
     const handleImageZoom = (event) => {
         // Prevent the browser from also triggering a 'click' event on touch devices
         if (event.type === 'touchstart') {
@@ -92,16 +95,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const zoomedImage = document.createElement('img');
         zoomedImage.src = image.src;
 
+        // Create the close button
+        const closeButton = document.createElement('span');
+        closeButton.classList.add('image-zoom-close-btn');
+        closeButton.innerHTML = '&times;'; // The '×' character
+
         // Add image to overlay and then to the body
         overlay.appendChild(zoomedImage);
+        overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
         document.body.classList.add('no-scroll'); // Prevent background scrolling
 
-        // Remove overlay when clicked
-        overlay.addEventListener('click', () => {
+        // Disable viewport zooming on mobile
+        if (viewportMeta) {
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+
+        const closeOverlay = () => {
             overlay.remove();
             document.body.classList.remove('no-scroll');
-        });
+            // Restore original viewport settings
+            if (viewportMeta && originalViewportContent) {
+                viewportMeta.setAttribute('content', originalViewportContent);
+            }
+        };
+
+        // Remove overlay when the close button is clicked
+        closeButton.addEventListener('click', closeOverlay);
     };
 
     document.querySelectorAll('.blog-content img').forEach(image => {

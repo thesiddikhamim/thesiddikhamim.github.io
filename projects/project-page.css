@@ -34,12 +34,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    cursor: zoom-out;
     padding: 20px;
 }
 
@@ -53,4 +52,20 @@
 
 .blog-content img:hover {
     transform: scale(1.02);
+}
+
+.image-zoom-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    color: white;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.image-zoom-close-btn:hover {
+    color: #ccc;
 }
