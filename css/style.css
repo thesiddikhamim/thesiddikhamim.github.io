@@ -456,7 +456,7 @@ h3 {
 
     .header-content {
         width: 100%;
-        padding: 2rem;
+        padding: 0 2rem 2rem; /* Removed top padding to bring it closer to the image */
         text-align: center;
     }
 
