@@ -79,53 +79,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewportMeta = document.querySelector('meta[name="viewport"]');
     const originalViewportContent = viewportMeta ? viewportMeta.getAttribute('content') : null;
 
-    const handleImageZoom = (event) => {
-        // Prevent the browser from also triggering a 'click' event on touch devices
-        if (event.type === 'touchstart') {
-            event.preventDefault();
-        }
-
-        const image = event.currentTarget;
-
-        // Create overlay element
+    const openImageModal = (imageSrc) => {
         const overlay = document.createElement('div');
         overlay.classList.add('image-zoom-overlay');
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'Image viewer');
 
-        // Create image element for the overlay
         const zoomedImage = document.createElement('img');
-        zoomedImage.src = image.src;
+        zoomedImage.src = imageSrc;
 
-        // Create the close button
-        const closeButton = document.createElement('span');
+        const closeButton = document.createElement('button');
         closeButton.classList.add('image-zoom-close-btn');
-        closeButton.innerHTML = '&times;'; // The '×' character
+        closeButton.innerHTML = '&times;';
+        closeButton.setAttribute('aria-label', 'Close image viewer');
 
-        // Add image to overlay and then to the body
+        const closeOverlay = () => {
+            overlay.classList.remove('visible');
+            overlay.addEventListener('transitionend', () => {
+                overlay.remove();
+                document.body.classList.remove('no-scroll');
+                if (viewportMeta && originalViewportContent) {
+                    viewportMeta.setAttribute('content', originalViewportContent);
+                }
+                document.removeEventListener('keydown', handleEsc);
+            }, { once: true });
+        };
+
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') {
+                closeOverlay();
+            }
+        };
+
+        closeButton.addEventListener('click', closeOverlay);
         overlay.appendChild(zoomedImage);
         overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
-        document.body.classList.add('no-scroll'); // Prevent background scrolling
+        document.body.classList.add('no-scroll');
 
-        // Disable viewport zooming on mobile
+        // Trigger the fade-in animation
+        requestAnimationFrame(() => {
+            overlay.classList.add('visible');
+        });
+
         if (viewportMeta) {
             viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
 
-        const closeOverlay = () => {
-            overlay.remove();
-            document.body.classList.remove('no-scroll');
-            // Restore original viewport settings
-            if (viewportMeta && originalViewportContent) {
-                viewportMeta.setAttribute('content', originalViewportContent);
-            }
-        };
-
-        // Remove overlay when the close button is clicked
-        closeButton.addEventListener('click', closeOverlay);
+        document.addEventListener('keydown', handleEsc);
     };
 
     document.querySelectorAll('.blog-content img').forEach(image => {
-        image.addEventListener('click', handleImageZoom);
-        image.addEventListener('touchstart', handleImageZoom);
+        image.addEventListener('click', (e) => {
+            openImageModal(e.currentTarget.src);
+        });
+        image.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            openImageModal(e.currentTarget.src);
+        });
     });
 });
