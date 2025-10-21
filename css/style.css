@@ -388,7 +388,8 @@ h3 {
 }
 
 .project-title-link h3 {
-    position: relative; /* Required for the underline pseudo-element */ /* Ensures underline is only as wide as the text */
+    position: relative; /* Required for the underline pseudo-element */
+    display: inline-block; /* Ensures underline is only as wide as the text */
     padding-bottom: 4px; /* Creates space for the underline to appear */
     transition: color 0.3s ease;
 }
@@ -401,6 +402,7 @@ h3 {
     left: 0;
     width: 100%;
     height: 2px;
+    background-color: #8A2BE2;
     transform: scaleX(0); /* Start with zero width */
     transform-origin: left; /* Animate from the left */
     transition: transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
@@ -409,12 +411,9 @@ h3 {
 .project-title-link {
     text-decoration: none;
     color: inherit;
-    transition: color 0.3s ease;
 }
 
 .project-title-link:hover h3 {
-    color: #8A2BE2; 
-    /* Or any other hover color you prefer */
     color: #8A2BE2;
 }
 
