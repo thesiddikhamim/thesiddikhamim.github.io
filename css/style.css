@@ -389,24 +389,11 @@ h3 {
 
 .project-title-link h3 {
     position: relative; /* Required for the underline pseudo-element */
-    display: inline-block; /* Ensures underline is only as wide as the text */
+  /* Ensures underline is only as wide as the text */
     padding-bottom: 4px; /* Creates space for the underline to appear */
     transition: color 0.3s ease;
 }
 
-/* The animated underline, initially hidden */
-.project-title-link h3::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #8A2BE2;
-    transform: scaleX(0); /* Start with zero width */
-    transform-origin: left; /* Animate from the left */
-    transition: transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
-}
 
 .project-title-link {
     text-decoration: none;
