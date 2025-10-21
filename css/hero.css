@@ -86,7 +86,7 @@ header p {
     font-size: 1.1rem;
     line-height: 1.7;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     max-width: 95%;
     font-family: 'DM sans','Geist Mono', 'Merriweather';
     font-size: 1.2rem;
