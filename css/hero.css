@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Bookerly'; /* set name */
+  src: url(/font/Bookerly.ttf) format('truetype'); /* url of the font */
+}
+@font-face {
+  font-family: 'Bookerly Bold'; /* set name */
+  src: url(/font/Bookerly-Bold.ttf) format('truetype'); /* url of the font */
+}
 /* Header / Hero Section */
 header {
     position: relative;
@@ -55,9 +63,10 @@ header {
 }
 
 header h1 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Bookerly Bold','Playfair Display', serif;
     font-size: 4.5rem;
-    font-weight: 500;
+    font-style: normal;
+    font-weight: 400;
     line-height: 1.2;
     margin-bottom: 1.5rem;
     color: var(--primary-color);
@@ -80,6 +89,7 @@ header p {
     margin-bottom: 1.5rem;
     max-width: 90%;
     font-family: 'DM sans','Geist Mono', 'Merriweather';
+    font-weight: 500;
 }
 
 /* Animations */

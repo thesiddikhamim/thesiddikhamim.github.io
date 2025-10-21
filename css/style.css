@@ -2,7 +2,7 @@
     --primary-color: #000000;
     --secondary-color: #f8f8f8;
     --text-color: #000000;
-    --text-secondary: #1b1515;
+    --text-secondary: #4f4949;
     --border-color: #eaeaea;
     --transition: all 0.3s ease;
     --container-width: 1200px;
@@ -145,11 +145,12 @@ h3 {
 .verify-button {
     display: block;
     background-color: #8A2BE2;
-    color: #fff;
+    color: #ffffff;
     padding: 12px 15px;
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
+    font-family: 'Poppins';
     font-weight: bold;
     transition: background-color 0.3s ease;
     margin-top: 20px;
