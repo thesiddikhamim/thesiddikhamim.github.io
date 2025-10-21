@@ -745,7 +745,7 @@ footer p {
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    padding: 20px;
+    padding: 2rem; /* Add padding to create a buffer from screen edges */
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -755,11 +755,14 @@ footer p {
 }
 
 .image-zoom-overlay img {
-    max-width: 90%;
-    max-height: 90%;
+    max-width: 100%;  /* Ensure image never overflows the padded overlay */
+    max-height: 100%; /* Ensure image never overflows the padded overlay */
     object-fit: contain;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
     border-radius: 5px;
+    /* Move transition here for a more reliable animation */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in;
+    will-change: transform, opacity;
 }
 
 .image-zoom-close-btn {
@@ -798,19 +801,20 @@ footer p {
 .image-zoom-stage {
     will-change: transform;
     transform-origin: center center;
-    transition: transform 0.1s ease-out;
+    transition: transform 0.05s ease-out; /* Faster transition for panning */
     cursor: default;
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: none; /* Allow clicks to pass through to the overlay */
 }
 
 /* Controls container */
 .image-zoom-controls {
     position: absolute;
-    left: 20px;
-    bottom: 20px;
+    bottom: 2rem; /* Position relative to the bottom of the viewport */
     display: flex;
+    align-items: center; /* Align all controls vertically */
     gap: 12px;
     z-index: 2001;
 }
