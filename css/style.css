@@ -387,6 +387,48 @@ h3 {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
+.project-title-link h3 {
+    position: relative; /* Required for the underline pseudo-element */ /* Ensures underline is only as wide as the text */
+    padding-bottom: 4px; /* Creates space for the underline to appear */
+    transition: color 0.3s ease;
+}
+
+/* The animated underline, initially hidden */
+.project-title-link h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0); /* Start with zero width */
+    transform-origin: left; /* Animate from the left */
+    transition: transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.project-title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+}
+
+.project-title-link:hover h3 {
+    color: #8A2BE2; 
+    /* Or any other hover color you prefer */
+    color: #8A2BE2;
+}
+
+.project-title-link:hover h3::after {
+    transform: scaleX(1); /* Expand underline to full width on hover */
+}
+
+/* The "pressed" effect on click */
+.project-title-link:active h3 {
+    transform: translateY(2px); /* Move text down slightly */
+    color: #5e1a9b; /* Use a darker shade for the active state */
+    transition: transform 0.1s ease; /* Make the press effect quick */
+}
+
 .project-image {
     width: auto;
     height: auto; /* Gives images a consistent shape */
