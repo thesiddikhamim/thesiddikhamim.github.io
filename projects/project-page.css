@@ -15,16 +15,12 @@
     margin-bottom: 2rem;
     /* Space after the title */
 }
-.blog-header h2 {
-    font-family: 'Poppins', sans-serif;
+
+.blog-container h3 {
+    font-family: 'Merriweather','Poppins', sans-serif;
     font-size: 2rem;
     margin-bottom: 2rem;
-    /* Space after the title */
-}
-.blog-header h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 2rem;
+    text-align: center;
     /* Space after the title */
 }
 .blog-content img {
