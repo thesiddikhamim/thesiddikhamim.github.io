@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- Refined Accordion Logic ---
     const accordionHeaders = document.querySelectorAll(".accordion-header");
+    const accordionItems = document.querySelectorAll('.accordion-item');
 
     accordionHeaders.forEach(header => {
         header.addEventListener("click", () => {
@@ -8,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const wasActive = currentItem.classList.contains("active");
 
             // Close all accordion items first
-            document.querySelectorAll('.accordion-item').forEach(item => {
+            accordionItems.forEach(item => {
                 item.classList.remove('active');
             });
 
@@ -40,12 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close menu when a link is clicked
     document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", closeMenu));
     
-    // Close menu when clicking outside of it
+    // Close menu when clicking outside of it - optimized with passive event listener
     body.addEventListener('click', (e) => {
         if (hamburger.classList.contains('active') && !navMenu.contains(e.target)) {
             closeMenu();
         }
-    });
+    }, { passive: true });
 
     // --- Enhanced "Show More" Certificates Logic ---
     const showMoreBtn = document.getElementById('show-more-certs-btn');
@@ -83,23 +84,28 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.remove('hidden');
-                        card.classList.add('visible');
-                        
-                        completed++;
-                        if (completed === total) {
-                            resolve();
-                        }
-                    }, index * 100); // Staggered reveal
-                });
+                // Use requestAnimationFrame for better performance
+                const animateCards = (index) => {
+                    if (index >= endIndex) {
+                        resolve();
+                        return;
+                    }
+                    
+                    const card = allCards[index];
+                    card.classList.remove('hidden');
+                    card.classList.add('visible');
+                    
+                    requestAnimationFrame(() => {
+                        setTimeout(() => animateCards(index + 1), 50); // Reduced delay for faster animation
+                    });
+                };
+                
+                animateCards(startIndex);
             });
         };
 
         const hideCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
-                let completed = 0;
                 const total = endIndex - startIndex;
                 
                 if (total === 0) {
@@ -107,17 +113,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.remove('visible');
-                        card.classList.add('hidden');
-                        
-                        completed++;
-                        if (completed === total) {
-                            resolve();
-                        }
-                    }, index * 50); // Faster hide animation
-                });
+                // Use requestAnimationFrame for better performance
+                const animateCards = (index) => {
+                    if (index >= endIndex) {
+                        resolve();
+                        return;
+                    }
+                    
+                    const card = allCards[index];
+                    card.classList.remove('visible');
+                    card.classList.add('hidden');
+                    
+                    requestAnimationFrame(() => {
+                        setTimeout(() => animateCards(index + 1), 25); // Faster hide animation
+                    });
+                };
+                
+                animateCards(startIndex);
             });
         };
 
@@ -173,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Add intersection observer for scroll-triggered animations
+        // Add intersection observer for scroll-triggered animations and lazy loading
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -183,6 +195,13 @@ document.addEventListener("DOMContentLoaded", () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
+                    
+                    // Lazy load images
+                    const img = entry.target.querySelector('img');
+                    if (img && img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
                 }
             });
         }, observerOptions);
@@ -290,11 +309,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Mouse wheel zoom (desktop)
+        // Mouse wheel zoom (desktop) - debounced for better performance
+        let wheelTimeout;
         overlay.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const delta = e.deltaY < 0 ? 1.15 : 0.87;
-            zoomAtPoint(delta, e.clientX, e.clientY);
+            clearTimeout(wheelTimeout);
+            wheelTimeout = setTimeout(() => {
+                const delta = e.deltaY < 0 ? 1.15 : 0.87;
+                zoomAtPoint(delta, e.clientX, e.clientY);
+            }, 16); // ~60fps
         }, { passive: false });
 
         // Double-click zoom toggle (desktop)
@@ -307,7 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Drag to pan (mouse)
+        // Drag to pan (mouse) - optimized with requestAnimationFrame
+        let animationFrame;
         stage.addEventListener('mousedown', (e) => {
             if (scale <= 1) return;
             isPanning = true;
@@ -317,11 +341,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         window.addEventListener('mousemove', (e) => {
             if (!isPanning) return;
-            translateX += e.clientX - lastX;
-            translateY += e.clientY - lastY;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            render();
+            cancelAnimationFrame(animationFrame);
+            animationFrame = requestAnimationFrame(() => {
+                translateX += e.clientX - lastX;
+                translateY += e.clientY - lastY;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                render();
+            });
         });
         window.addEventListener('mouseup', () => {
             isPanning = false;

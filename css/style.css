@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #251f2a;
+    --primary-color: #000000;
     --secondary-color: #f8f8f8;
     --text-color: #000000;
-    --text-secondary: #4f4949;
+    --text-secondary: #1b1515;
     --border-color: #eaeaea;
     --transition: all 0.3s ease;
     --container-width: 1200px;
@@ -17,6 +17,14 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Performance optimizations */
+* {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
 
 html,
 body {
@@ -26,6 +34,9 @@ body {
     line-height: 1.6;
     font-family: 'Merriweather', serif;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 body.no-scroll {
@@ -61,10 +72,9 @@ section:nth-child(even) {
 h2 {
     font-family: 'Merriweather', sans-serif;
     text-align: center;
+    font-size: 2.3rem;
     font-weight: 500;
-    font-size: 2em;
-    margin-bottom: 40px;
-
+    margin-bottom: 2rem;
     color: var(--primary-color);
 }
 
@@ -104,7 +114,7 @@ h3 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    /* This is new */
+    will-change: transform;
 }
 
 .certificate-card:hover {
@@ -146,12 +156,11 @@ h3 {
 .verify-button {
     display: block;
     background-color: #8A2BE2;
-    color: #ffffff;
+    color: #fff;
     padding: 12px 15px;
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    font-family: 'Poppins';
     font-weight: bold;
     transition: background-color 0.3s ease;
     margin-top: 20px;
@@ -167,6 +176,7 @@ h3 {
     opacity: 0;
     transform: translateY(30px);
     animation: slideInUp 0.6s ease-out forwards;
+    will-change: transform, opacity;
 }
 
 .certificate-card.hidden {
@@ -179,16 +189,16 @@ h3 {
     overflow: hidden;
     border: none;
     transform: translateY(-20px) scale(0.95);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .certificate-card.visible {
     opacity: 1;
     transform: translateY(0) scale(1);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Staggered animation for cards */
+/* Staggered animation for cards - optimized with CSS custom properties */
 .certificate-card:nth-child(1) { animation-delay: 0.1s; }
 .certificate-card:nth-child(2) { animation-delay: 0.2s; }
 .certificate-card:nth-child(3) { animation-delay: 0.3s; }
@@ -357,7 +367,6 @@ h3 {
 #projects {
     padding: 30px 5%; /* Slightly reduced vertical padding */
     text-align: center;
-    font-family: "Merriweather";
     background-color: #f8f8f8; /* A slightly different background to distinguish it */
 }
 
@@ -365,7 +374,6 @@ h3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Keep cards from getting too small */
     gap: 20px;
-    font-family: "Merriweather";
     text-align: left;
     max-width: 900px; /* Constrain the max-width of the container */
     margin: 0 auto; /* Center the container within the section */
@@ -375,11 +383,11 @@ h3 {
     background-color: #fff;
     border-radius: 8px;
     display: flex;
-    font-family: "Merriweather";
     flex-direction: column;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    will-change: transform;
 }
 
 .project-card:hover {
@@ -389,7 +397,7 @@ h3 {
 
 .project-image {
     width: auto;
-    height: 18.5rem; /* Gives images a consistent shape */
+    height: auto; /* Gives images a consistent shape */
 
     display: block;
 }
@@ -398,7 +406,7 @@ h3 {
     font-size: 0.95em;
     color: #555;
     margin: 0;
-    font-family: 'Bookerly', serif;
+    font-family: 'Merriweather', serif;
     flex-grow: 1; /* Pushes the buttons to the bottom */
 }
 
@@ -414,7 +422,6 @@ h3 {
     padding: 12px 15px;
     text-align: center;
     text-decoration: none;
-    font-family: "Poppins";
     border-radius: 5px;
     font-weight: bold;
     transition: all 0.3s ease;
@@ -512,6 +519,8 @@ footer p {
     height: 2rem;
     fill: white; /* Inherit color from the parent 'a' tag */
 }
+
+
 /* Skills Accordion Section */
 .skills-section {
     width: 100%;
@@ -715,17 +724,3 @@ footer p {
     /* 40px */
     margin-bottom: 0;
 }
-
-
-
-.email-link {
-    color: inherit; /* Inherits the white color from the parent <p> tag */
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-}
-
-.email-link:hover {
-    opacity: 1;
-    text-decoration: underline;
-}
-
