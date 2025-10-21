@@ -245,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let lastY = 0;
         let lastTouchDistance = null;
         let doubleTapTimeout = null;
+        let panAnimationId = null;
 
         const render = () => {
             stage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
@@ -281,14 +282,44 @@ document.addEventListener("DOMContentLoaded", () => {
                 overlay.remove();
                 document.body.classList.remove('no-scroll');
                 document.removeEventListener('keydown', handleEsc);
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleMouseUp);
             }, { once: true });
         };
 
         const handleEsc = (e) => {
-            if (e.key === 'Escape') {
+            // Don't interfere with text input
+            if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+                return;
+            }
+            
+            if (e.key === 'Escape' || e.key === 'Esc') {
                 closeOverlay();
+            } else if (e.key === '+' || e.key === '=') { // Zoom In
+                zoomInBtn.click();
+            } else if (e.key === '-' || e.key === '_') { // Zoom Out
+                zoomOutBtn.click();
+            } else if (e.key === '0' || e.key === 'r') { // Reset
+                resetView();
+            } else if (e.key.startsWith('Arrow')) { // Panning
+                e.preventDefault();
+                if (scale > 1) {
+                    const panAmount = 30;
+                    if (e.key === 'ArrowUp') translateY += panAmount;
+                    if (e.key === 'ArrowDown') translateY -= panAmount;
+                    if (e.key === 'ArrowLeft') translateX += panAmount;
+                    if (e.key === 'ArrowRight') translateX -= panAmount;
+                    render();
+                }
             }
         };
+
+        // Click on overlay background to close
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeOverlay();
+            }
+        });
 
         // Mouse wheel zoom (desktop)
         overlay.addEventListener('wheel', (e) => {
@@ -307,6 +338,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        const handleMouseMove = (e) => {
+            if (!isPanning) return;
+            
+            const deltaX = e.clientX - lastX;
+            const deltaY = e.clientY - lastY;
+            lastX = e.clientX;
+            lastY = e.clientY;
+
+            if (panAnimationId) cancelAnimationFrame(panAnimationId);
+
+            panAnimationId = requestAnimationFrame(() => {
+                translateX += deltaX;
+                translateY += deltaY;
+                render();
+                panAnimationId = null;
+            });
+        };
+
+        const handleMouseUp = () => {
+            isPanning = false;
+            stage.style.cursor = scale > 1 ? 'grab' : 'default';
+            if (panAnimationId) {
+                cancelAnimationFrame(panAnimationId);
+                panAnimationId = null;
+            }
+        };
+
         // Drag to pan (mouse)
         stage.addEventListener('mousedown', (e) => {
             if (scale <= 1) return;
@@ -315,18 +373,8 @@ document.addEventListener("DOMContentLoaded", () => {
             lastY = e.clientY;
             stage.style.cursor = 'grabbing';
         });
-        window.addEventListener('mousemove', (e) => {
-            if (!isPanning) return;
-            translateX += e.clientX - lastX;
-            translateY += e.clientY - lastY;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            render();
-        });
-        window.addEventListener('mouseup', () => {
-            isPanning = false;
-            stage.style.cursor = scale > 1 ? 'grab' : 'default';
-        });
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
 
         // Touch: double-tap to zoom, pinch to zoom, single-finger pan
         overlay.addEventListener('touchstart', (e) => {
