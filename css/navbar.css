@@ -1,6 +1,7 @@
 /* Navbar Styling */
 .navbar {
     display: flex;
+    font-family: "DM sans", "Geist Mono", Merriweather;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
@@ -31,8 +32,8 @@
 .nav-link {
     text-decoration: none;
     color: #555;
+    font-family: "DM sans", "Geist Mono", Merriweather;
     font-weight: 500;
-    font-family: 'Inter', sans-serif;
     transition: color 0.3s ease-in-out;
 }
 
