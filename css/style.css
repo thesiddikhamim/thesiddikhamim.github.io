@@ -398,8 +398,13 @@ h3 {
 .project-image {
     width: auto;
     height: auto; /* Gives images a consistent shape */
-
     display: block;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.project-image:hover {
+    transform: scale(1.02);
 }
 
 .project-description {
@@ -726,4 +731,111 @@ footer p {
     margin-top: 2.5rem;
     /* 40px */
     margin-bottom: 0;
+}
+
+/* --- Image Zoom Modal Styles --- */
+.image-zoom-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-zoom-overlay.visible {
+    opacity: 1;
+}
+
+.image-zoom-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    border-radius: 5px;
+}
+
+.image-zoom-close-btn {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    z-index: 2001;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.image-zoom-close-btn:hover {
+    background: rgba(255, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(255, 0, 0, 0.4);
+}
+
+/* Zoom stage wraps the image and receives transforms */
+.image-zoom-stage {
+    will-change: transform;
+    transform-origin: center center;
+    transition: transform 0.1s ease-out;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Controls container */
+.image-zoom-controls {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    gap: 12px;
+    z-index: 2001;
+}
+
+.image-zoom-ctrl {
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.8);
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    min-width: 50px;
+}
+
+.image-zoom-ctrl:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255,255,255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }

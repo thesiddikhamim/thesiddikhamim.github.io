@@ -237,26 +237,49 @@ document.addEventListener("DOMContentLoaded", () => {
         zoomOutBtn.classList.add('image-zoom-ctrl');
         zoomOutBtn.setAttribute('aria-label', 'Zoom out');
         zoomOutBtn.textContent = '−';
+        zoomOutBtn.title = 'Zoom Out';
         const resetBtn = document.createElement('button');
         resetBtn.classList.add('image-zoom-ctrl');
         resetBtn.setAttribute('aria-label', 'Reset zoom');
         resetBtn.textContent = 'Reset';
+        resetBtn.title = 'Reset Zoom';
         const zoomInBtn = document.createElement('button');
         zoomInBtn.classList.add('image-zoom-ctrl');
         zoomInBtn.setAttribute('aria-label', 'Zoom in');
         zoomInBtn.textContent = '+';
+        zoomInBtn.title = 'Zoom In';
+        // Add zoom level indicator
+        const zoomIndicator = document.createElement('div');
+        zoomIndicator.classList.add('zoom-level-indicator');
+        zoomIndicator.textContent = '100%';
+        zoomIndicator.style.cssText = `
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            min-width: 50px;
+            text-align: center;
+        `;
+
         controls.appendChild(zoomOutBtn);
         controls.appendChild(resetBtn);
         controls.appendChild(zoomInBtn);
+        controls.appendChild(zoomIndicator);
 
         const closeButton = document.createElement('button');
         closeButton.classList.add('image-zoom-close-btn');
         closeButton.innerHTML = '&times;';
-        closeButton.setAttribute('aria-label', 'Close image viewer');
+        closeButton.setAttribute('aria-label', 'Close image viewer (ESC)');
+        closeButton.title = 'Close (ESC)';
 
         let scale = 1;
-        let minScale = 1;
-        let maxScale = 5;
+        let minScale = 0.5; // Allow zoom out
+        let maxScale = 3; // Reduced max zoom
         let translateX = 0;
         let translateY = 0;
         let isPanning = false;
@@ -268,6 +291,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const render = () => {
             stage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
             stage.style.cursor = scale > 1 ? 'grab' : 'default';
+            
+            // Update zoom level indicator if it exists
+            const zoomIndicator = document.querySelector('.zoom-level-indicator');
+            if (zoomIndicator) {
+                zoomIndicator.textContent = `${Math.round(scale * 100)}%`;
+            }
+        };
+
+        // Center the image initially
+        const centerImage = () => {
+            // Reset to center
+            translateX = 0;
+            translateY = 0;
+            render();
         };
 
         const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -291,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
             scale = 1;
             translateX = 0;
             translateY = 0;
-            render();
+            centerImage();
         };
 
         const closeOverlay = () => {
@@ -309,22 +346,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Mouse wheel zoom (desktop) - debounced for better performance
-        let wheelTimeout;
+        // Mouse wheel zoom (desktop) - optimized for better responsiveness
         overlay.addEventListener('wheel', (e) => {
             e.preventDefault();
-            clearTimeout(wheelTimeout);
-            wheelTimeout = setTimeout(() => {
-                const delta = e.deltaY < 0 ? 1.15 : 0.87;
-                zoomAtPoint(delta, e.clientX, e.clientY);
-            }, 16); // ~60fps
+            const delta = e.deltaY < 0 ? 1.1 : 0.9; // Reduced zoom increment for smoother control
+            zoomAtPoint(delta, e.clientX, e.clientY);
         }, { passive: false });
 
-        // Double-click zoom toggle (desktop)
+        // Double-click zoom toggle (desktop) - improved zoom levels
         overlay.addEventListener('dblclick', (e) => {
             e.preventDefault();
             if (scale === 1) {
-                zoomAtPoint(2, e.clientX, e.clientY);
+                zoomAtPoint(2.5, e.clientX, e.clientY); // Zoom to 2.5x on double-click
             } else {
                 resetView();
             }
@@ -413,15 +446,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         zoomInBtn.addEventListener('click', () => {
             const rect = stage.getBoundingClientRect();
-            zoomAtPoint(1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            zoomAtPoint(1.3, rect.left + rect.width / 2, rect.top + rect.height / 2);
         });
         zoomOutBtn.addEventListener('click', () => {
             const rect = stage.getBoundingClientRect();
-            zoomAtPoint(0.83, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            zoomAtPoint(0.7, rect.left + rect.width / 2, rect.top + rect.height / 2);
         });
         resetBtn.addEventListener('click', resetView);
 
         closeButton.addEventListener('click', closeOverlay);
+        
+        // Close when clicking outside the image
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                closeOverlay();
+            }
+        });
 
         // Prevent background scroll/zoom on touch devices
         overlay.addEventListener('touchmove', (e) => {
@@ -435,6 +475,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(overlay);
         document.body.classList.add('no-scroll');
 
+        // Wait for image to load, then center it
+        zoomedImage.onload = () => {
+            centerImage();
+        };
+
         // Trigger the fade-in animation
         requestAnimationFrame(() => {
             overlay.classList.add('visible');
@@ -443,6 +488,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener('keydown', handleEsc);
         render();
     };
+
+    // Add zoom functionality to project images on main page
+    document.querySelectorAll('.project-image').forEach(image => {
+        image.addEventListener('click', (e) => {
+            e.preventDefault();
+            openImageModal(image.src);
+        });
+    });
 
     document.querySelectorAll('.blog-content img').forEach(image => {
         let touchStartTime = 0;
