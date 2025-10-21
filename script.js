@@ -323,11 +323,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const availableWidth = overlay.clientWidth - (parseFloat(overlayStyle.paddingLeft) + parseFloat(overlayStyle.paddingRight));
             const availableHeight = overlay.clientHeight - (parseFloat(overlayStyle.paddingTop) + parseFloat(overlayStyle.paddingBottom));
             
-            const scaleBasedOnWidth = availableWidth / naturalWidth;
-            const scaleBasedOnHeight = availableHeight / naturalHeight;
+            let initialScale;
+            const isMobile = window.innerWidth <= 768;
             
-            // Use the smaller of the two scales to ensure the image fits on the screen
-            const initialScale = Math.min(scaleBasedOnWidth, scaleBasedOnHeight);
+            if (isMobile) {
+                // On mobile, prioritize filling the width for a more impactful view.
+                initialScale = availableWidth / naturalWidth;
+            } else {
+                // On desktop, fit the entire image within the available space.
+                const scaleBasedOnWidth = availableWidth / naturalWidth;
+                const scaleBasedOnHeight = availableHeight / naturalHeight;
+                initialScale = Math.min(scaleBasedOnWidth, scaleBasedOnHeight);
+            }
             
             scale = initialScale;
             translateX = 0;

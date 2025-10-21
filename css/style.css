@@ -755,8 +755,8 @@ footer p {
 }
 
 .image-zoom-overlay img {
-    max-width: 100%;  /* Ensure image never overflows the padded overlay */
-    max-height: 100%; /* Ensure image never overflows the padded overlay */
+    max-width: none;  /* Let transform control the size */
+    max-height: none; /* Let transform control the size */
     object-fit: contain;
     box-shadow: 0 0 30px rgba(0,0,0,0.5);
     border-radius: 5px;
@@ -842,4 +842,11 @@ footer p {
     border-color: rgba(255,255,255, 1);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive adjustments for the zoom overlay on smaller screens */
+@media (max-width: 768px) {
+    .image-zoom-overlay {
+        padding: 1rem; /* Reduce padding on mobile for more image space */
+    }
 }
