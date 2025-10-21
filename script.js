@@ -132,16 +132,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        const smoothScrollToSection = () => {
-            const section = document.getElementById('certificates');
-            const sectionTop = section.offsetTop - 100; // Offset for better positioning
-            
-            window.scrollTo({
-                top: sectionTop,
-                behavior: 'smooth'
-            });
-        };
-
         // Initial setup
         if (allCards.length <= itemsPerLoad) {
             showMoreBtn.style.display = 'none';
@@ -173,9 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     await showCardsWithAnimation(showStartIndex, showEndIndex);
                     currentlyVisible = showEndIndex;
-                    
-                    // Smooth scroll to section when showing more
-                    setTimeout(smoothScrollToSection, 300);
                 }
                 
                 updateProgressBar();
