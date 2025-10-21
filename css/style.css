@@ -520,6 +520,9 @@ footer p {
     fill: white; /* Inherit color from the parent 'a' tag */
 }
 
+.email-link {
+                color: white;
+            }
 
 /* Skills Accordion Section */
 .skills-section {
