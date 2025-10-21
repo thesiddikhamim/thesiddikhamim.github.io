@@ -1,8 +1,8 @@
 :root {
-    --primary-color: #000000;
+    --primary-color: #251f2a;
     --secondary-color: #f8f8f8;
     --text-color: #000000;
-    --text-secondary: #1b1515;
+    --text-secondary: #4f4949;
     --border-color: #eaeaea;
     --transition: all 0.3s ease;
     --container-width: 1200px;
@@ -17,14 +17,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Performance optimizations */
-* {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
-    perspective: 1000;
-}
-
 
 html,
 body {
@@ -34,9 +26,6 @@ body {
     line-height: 1.6;
     font-family: 'Merriweather', serif;
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
 }
 
 body.no-scroll {
@@ -72,9 +61,10 @@ section:nth-child(even) {
 h2 {
     font-family: 'Merriweather', sans-serif;
     text-align: center;
-    font-size: 2.3rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    font-size: 2em;
+    margin-bottom: 40px;
+
     color: var(--primary-color);
 }
 
@@ -114,7 +104,7 @@ h3 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    will-change: transform;
+    /* This is new */
 }
 
 .certificate-card:hover {
@@ -156,11 +146,12 @@ h3 {
 .verify-button {
     display: block;
     background-color: #8A2BE2;
-    color: #fff;
+    color: #ffffff;
     padding: 12px 15px;
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
+    font-family: 'Poppins';
     font-weight: bold;
     transition: background-color 0.3s ease;
     margin-top: 20px;
@@ -176,7 +167,6 @@ h3 {
     opacity: 0;
     transform: translateY(30px);
     animation: slideInUp 0.6s ease-out forwards;
-    will-change: transform, opacity;
 }
 
 .certificate-card.hidden {
@@ -189,16 +179,16 @@ h3 {
     overflow: hidden;
     border: none;
     transform: translateY(-20px) scale(0.95);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .certificate-card.visible {
     opacity: 1;
     transform: translateY(0) scale(1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Staggered animation for cards - optimized with CSS custom properties */
+/* Staggered animation for cards */
 .certificate-card:nth-child(1) { animation-delay: 0.1s; }
 .certificate-card:nth-child(2) { animation-delay: 0.2s; }
 .certificate-card:nth-child(3) { animation-delay: 0.3s; }
@@ -367,6 +357,7 @@ h3 {
 #projects {
     padding: 30px 5%; /* Slightly reduced vertical padding */
     text-align: center;
+    font-family: "Merriweather";
     background-color: #f8f8f8; /* A slightly different background to distinguish it */
 }
 
@@ -374,6 +365,7 @@ h3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Keep cards from getting too small */
     gap: 20px;
+    font-family: "Merriweather";
     text-align: left;
     max-width: 900px; /* Constrain the max-width of the container */
     margin: 0 auto; /* Center the container within the section */
@@ -383,11 +375,11 @@ h3 {
     background-color: #fff;
     border-radius: 8px;
     display: flex;
+    font-family: "Merriweather";
     flex-direction: column;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
-    will-change: transform;
 }
 
 .project-card:hover {
@@ -397,21 +389,16 @@ h3 {
 
 .project-image {
     width: auto;
-    height: auto; /* Gives images a consistent shape */
-    display: block;
-    cursor: zoom-in;
-    transition: transform 0.2s ease;
-}
+    height: 18.5rem; /* Gives images a consistent shape */
 
-.project-image:hover {
-    transform: scale(1.02);
+    display: block;
 }
 
 .project-description {
     font-size: 0.95em;
     color: #555;
     margin: 0;
-    font-family: 'Merriweather', serif;
+    font-family: 'Bookerly', serif;
     flex-grow: 1; /* Pushes the buttons to the bottom */
 }
 
@@ -427,6 +414,7 @@ h3 {
     padding: 12px 15px;
     text-align: center;
     text-decoration: none;
+    font-family: "Poppins";
     border-radius: 5px;
     font-weight: bold;
     transition: all 0.3s ease;
@@ -524,11 +512,6 @@ footer p {
     height: 2rem;
     fill: white; /* Inherit color from the parent 'a' tag */
 }
-
-.email-link {
-                color: white;
-            }
-
 /* Skills Accordion Section */
 .skills-section {
     width: 100%;
@@ -733,120 +716,15 @@ footer p {
     margin-bottom: 0;
 }
 
-/* --- Image Zoom Modal Styles --- */
-.image-zoom-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-    padding: 2rem; /* Add padding to create a buffer from screen edges */
-    opacity: 0;
+
+
+.email-link {
+    color: inherit; /* Inherits the white color from the parent <p> tag */
+    text-decoration: none;
     transition: opacity 0.3s ease;
 }
 
-.image-zoom-overlay.visible {
+.email-link:hover {
     opacity: 1;
-}
-
-.image-zoom-overlay img {
-    max-width: none;  /* Let transform control the size */
-    max-height: none; /* Let transform control the size */
-    object-fit: contain;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    border-radius: 5px;
-    /* Move transition here for a more reliable animation */
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease-in;
-    will-change: transform, opacity;
-}
-
-.image-zoom-close-btn {
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid rgba(255, 255, 255, 0.8);
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    font-size: 1.8rem;
-    color: white;
-    font-weight: 300;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    line-height: 1;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    z-index: 2001;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.image-zoom-close-btn:hover {
-    background: rgba(255, 0, 0, 0.8);
-    border-color: rgba(255, 255, 255, 1);
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(255, 0, 0, 0.4);
-}
-
-/* Zoom stage wraps the image and receives transforms */
-.image-zoom-stage {
-    will-change: transform;
-    transform-origin: center center;
-    transition: transform 0.05s ease-out; /* Faster transition for panning */
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none; /* Allow clicks to pass through to the overlay */
-}
-
-/* Controls container */
-.image-zoom-controls {
-    position: absolute;
-    bottom: 2rem; /* Position relative to the bottom of the viewport */
-    display: flex;
-    align-items: center; /* Align all controls vertically */
-    gap: 12px;
-    z-index: 2001;
-}
-
-.image-zoom-ctrl {
-    -webkit-appearance: none;
-    appearance: none;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    border: 2px solid rgba(255,255,255,0.8);
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1;
-    cursor: pointer;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
-    font-weight: 600;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    min-width: 50px;
-}
-
-.image-zoom-ctrl:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255,255,255, 1);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-/* Responsive adjustments for the zoom overlay on smaller screens */
-@media (max-width: 768px) {
-    .image-zoom-overlay {
-        padding: 1rem; /* Reduce padding on mobile for more image space */
-    }
+    text-decoration: underline;
 }

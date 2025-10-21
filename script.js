@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- Refined Accordion Logic ---
     const accordionHeaders = document.querySelectorAll(".accordion-header");
-    const accordionItems = document.querySelectorAll('.accordion-item');
 
     accordionHeaders.forEach(header => {
         header.addEventListener("click", () => {
@@ -9,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const wasActive = currentItem.classList.contains("active");
 
             // Close all accordion items first
-            accordionItems.forEach(item => {
+            document.querySelectorAll('.accordion-item').forEach(item => {
                 item.classList.remove('active');
             });
 
@@ -41,12 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close menu when a link is clicked
     document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", closeMenu));
     
-    // Close menu when clicking outside of it - optimized with passive event listener
+    // Close menu when clicking outside of it
     body.addEventListener('click', (e) => {
         if (hamburger.classList.contains('active') && !navMenu.contains(e.target)) {
             closeMenu();
         }
-    }, { passive: true });
+    });
 
     // --- Enhanced "Show More" Certificates Logic ---
     const showMoreBtn = document.getElementById('show-more-certs-btn');
@@ -84,28 +83,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // Use requestAnimationFrame for better performance
-                const animateCards = (index) => {
-                    if (index >= endIndex) {
-                        resolve();
-                        return;
-                    }
-                    
-                    const card = allCards[index];
-                    card.classList.remove('hidden');
-                    card.classList.add('visible');
-                    
-                    requestAnimationFrame(() => {
-                        setTimeout(() => animateCards(index + 1), 50); // Reduced delay for faster animation
-                    });
-                };
-                
-                animateCards(startIndex);
+                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.remove('hidden');
+                        card.classList.add('visible');
+                        
+                        completed++;
+                        if (completed === total) {
+                            resolve();
+                        }
+                    }, index * 100); // Staggered reveal
+                });
             });
         };
 
         const hideCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
+                let completed = 0;
                 const total = endIndex - startIndex;
                 
                 if (total === 0) {
@@ -113,23 +107,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // Use requestAnimationFrame for better performance
-                const animateCards = (index) => {
-                    if (index >= endIndex) {
-                        resolve();
-                        return;
-                    }
-                    
-                    const card = allCards[index];
-                    card.classList.remove('visible');
-                    card.classList.add('hidden');
-                    
-                    requestAnimationFrame(() => {
-                        setTimeout(() => animateCards(index + 1), 25); // Faster hide animation
-                    });
-                };
-                
-                animateCards(startIndex);
+                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.remove('visible');
+                        card.classList.add('hidden');
+                        
+                        completed++;
+                        if (completed === total) {
+                            resolve();
+                        }
+                    }, index * 50); // Faster hide animation
+                });
             });
         };
 
@@ -185,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Add intersection observer for scroll-triggered animations and lazy loading
+        // Add intersection observer for scroll-triggered animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -195,13 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
-                    
-                    // Lazy load images
-                    const img = entry.target.querySelector('img');
-                    if (img && img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
                 }
             });
         }, observerOptions);
@@ -228,8 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const zoomedImage = document.createElement('img');
         zoomedImage.src = imageSrc;
-        // Set initial state for animation
-        zoomedImage.style.opacity = '0';
         stage.appendChild(zoomedImage);
 
         // Controls
@@ -239,49 +218,26 @@ document.addEventListener("DOMContentLoaded", () => {
         zoomOutBtn.classList.add('image-zoom-ctrl');
         zoomOutBtn.setAttribute('aria-label', 'Zoom out');
         zoomOutBtn.textContent = '−';
-        zoomOutBtn.title = 'Zoom Out';
         const resetBtn = document.createElement('button');
         resetBtn.classList.add('image-zoom-ctrl');
         resetBtn.setAttribute('aria-label', 'Reset zoom');
         resetBtn.textContent = 'Reset';
-        resetBtn.title = 'Reset Zoom';
         const zoomInBtn = document.createElement('button');
         zoomInBtn.classList.add('image-zoom-ctrl');
         zoomInBtn.setAttribute('aria-label', 'Zoom in');
         zoomInBtn.textContent = '+';
-        zoomInBtn.title = 'Zoom In';
-        // Add zoom level indicator
-        const zoomIndicator = document.createElement('div');
-        zoomIndicator.classList.add('zoom-level-indicator');
-        zoomIndicator.textContent = '100%';
-        zoomIndicator.style.cssText = `
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            min-width: 50px;
-            text-align: center;
-        `;
-
         controls.appendChild(zoomOutBtn);
         controls.appendChild(resetBtn);
         controls.appendChild(zoomInBtn);
-        controls.appendChild(zoomIndicator);
 
         const closeButton = document.createElement('button');
         closeButton.classList.add('image-zoom-close-btn');
         closeButton.innerHTML = '&times;';
-        closeButton.setAttribute('aria-label', 'Close image viewer (ESC)');
-        closeButton.title = 'Close (ESC)';
+        closeButton.setAttribute('aria-label', 'Close image viewer');
 
-        let scale = 1; // Start scale at 1, but will be overridden
-        let minScale = 0.3; // Allow zoom out to 30%
-        let maxScale = 5; // Allow zoom in to 500%
+        let scale = 1;
+        let minScale = 1;
+        let maxScale = 5;
         let translateX = 0;
         let translateY = 0;
         let isPanning = false;
@@ -291,55 +247,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let doubleTapTimeout = null;
 
         const render = () => {
-            // Apply panning to the stage, but scaling to the image
-            stage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
-            zoomedImage.style.transform = `scale(${scale})`;
+            stage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
             stage.style.cursor = scale > 1 ? 'grab' : 'default';
-            
-            // Update zoom level indicator
-            zoomIndicator.textContent = `${Math.round(scale * 100)}%`;
-        };
-
-        // Center the image initially
-        const centerImage = () => {
-            // Reset to center
-            translateX = 0;
-            translateY = 0;
-            render();
-        };
-
-        // Fit image to screen at optimal zoom level - maximize size
-        const fitImageToScreen = () => {
-            const naturalWidth = zoomedImage.naturalWidth;
-            const naturalHeight = zoomedImage.naturalHeight;
-
-            if (naturalWidth === 0 || naturalHeight === 0) {
-                centerImage();
-                return;
-            }
-            
-            // Get the available content area inside the overlay, respecting the padding.
-            const overlayStyle = window.getComputedStyle(overlay);
-            const availableWidth = overlay.clientWidth - (parseFloat(overlayStyle.paddingLeft) + parseFloat(overlayStyle.paddingRight));
-            const availableHeight = overlay.clientHeight - (parseFloat(overlayStyle.paddingTop) + parseFloat(overlayStyle.paddingBottom));
-            
-            let initialScale;
-            const isMobile = window.innerWidth <= 768;
-            
-            if (isMobile) {
-                // On mobile, prioritize filling the width for a more impactful view.
-                initialScale = availableWidth / naturalWidth;
-            } else {
-                // On desktop, fit the entire image within the available space.
-                const scaleBasedOnWidth = availableWidth / naturalWidth;
-                const scaleBasedOnHeight = availableHeight / naturalHeight;
-                initialScale = Math.min(scaleBasedOnWidth, scaleBasedOnHeight);
-            }
-            
-            scale = initialScale;
-            translateX = 0;
-            translateY = 0;
-            render();
         };
 
         const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -360,7 +269,10 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const resetView = () => {
-            fitImageToScreen();
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            render();
         };
 
         const closeOverlay = () => {
@@ -369,8 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 overlay.remove();
                 document.body.classList.remove('no-scroll');
                 document.removeEventListener('keydown', handleEsc);
-                document.removeEventListener('mousemove', handleMouseMove);
-                document.removeEventListener('mouseup', handleMouseUp);
             }, { once: true });
         };
 
@@ -380,54 +290,43 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Mouse wheel zoom (desktop) - optimized for better responsiveness
+        // Mouse wheel zoom (desktop)
         overlay.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const delta = e.deltaY < 0 ? 1.15 : 0.85; // Better zoom increment
+            const delta = e.deltaY < 0 ? 1.15 : 0.87;
             zoomAtPoint(delta, e.clientX, e.clientY);
         }, { passive: false });
 
-        // Double-click zoom toggle (desktop) - improved zoom levels
+        // Double-click zoom toggle (desktop)
         overlay.addEventListener('dblclick', (e) => {
             e.preventDefault();
-            if (scale < 2) {
-                zoomAtPoint(2.5, e.clientX, e.clientY); // Zoom to 2.5x on double-click
+            if (scale === 1) {
+                zoomAtPoint(2, e.clientX, e.clientY);
             } else {
-                resetView(); // Reset to fit-to-screen
+                resetView();
             }
         });
 
-        // Drag to pan (mouse) - optimized with requestAnimationFrame
-        let animationFrame;
+        // Drag to pan (mouse)
         stage.addEventListener('mousedown', (e) => {
             if (scale <= 1) return;
-            e.preventDefault();
             isPanning = true;
             lastX = e.clientX;
             lastY = e.clientY;
             stage.style.cursor = 'grabbing';
         });
-        
-        const handleMouseMove = (e) => {
+        window.addEventListener('mousemove', (e) => {
             if (!isPanning) return;
-            e.preventDefault();
-            cancelAnimationFrame(animationFrame);
-            animationFrame = requestAnimationFrame(() => {
-                translateX += e.clientX - lastX;
-                translateY += e.clientY - lastY;
-                lastX = e.clientX;
-                lastY = e.clientY;
-                render();
-            });
-        };
-        
-        const handleMouseUp = () => {
+            translateX += e.clientX - lastX;
+            translateY += e.clientY - lastY;
+            lastX = e.clientX;
+            lastY = e.clientY;
+            render();
+        });
+        window.addEventListener('mouseup', () => {
             isPanning = false;
             stage.style.cursor = scale > 1 ? 'grab' : 'default';
-        };
-        
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
+        });
 
         // Touch: double-tap to zoom, pinch to zoom, single-finger pan
         overlay.addEventListener('touchstart', (e) => {
@@ -457,7 +356,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         overlay.addEventListener('touchmove', (e) => {
             if (e.touches.length === 1 && scale > 1) {
-                e.preventDefault();
                 const t = e.touches[0];
                 if (lastX !== null && lastY !== null) {
                     translateX += t.clientX - lastX;
@@ -487,23 +385,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         zoomInBtn.addEventListener('click', () => {
-            const rect = overlay.getBoundingClientRect();
+            const rect = stage.getBoundingClientRect();
             zoomAtPoint(1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
         });
         zoomOutBtn.addEventListener('click', () => {
-            const rect = overlay.getBoundingClientRect();
-            zoomAtPoint(0.8, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            const rect = stage.getBoundingClientRect();
+            zoomAtPoint(0.83, rect.left + rect.width / 2, rect.top + rect.height / 2);
         });
         resetBtn.addEventListener('click', resetView);
 
         closeButton.addEventListener('click', closeOverlay);
-        
-        // Close when clicking outside the image
-        overlay.addEventListener('click', (e) => {
-            if (e.target === overlay) {
-                closeOverlay();
-            }
-        });
 
         // Prevent background scroll/zoom on touch devices
         overlay.addEventListener('touchmove', (e) => {
@@ -517,31 +408,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(overlay);
         document.body.classList.add('no-scroll');
 
-        zoomedImage.onload = () => {
-            // 1. Set initial scale to 0 before animation
-            scale = 0;
-            render();
-
-            // 2. Make the overlay visible
+        // Trigger the fade-in animation
+        requestAnimationFrame(() => {
             overlay.classList.add('visible');
-
-            // 3. In the next frame, calculate final size and animate
-            requestAnimationFrame(() => {
-                fitImageToScreen();
-                zoomedImage.style.opacity = '1';
-            });
-        };
+        });
 
         document.addEventListener('keydown', handleEsc);
-    };    
-
-    // Add zoom functionality to project images on main page
-    document.querySelectorAll('.project-image').forEach(image => {
-        image.addEventListener('click', (e) => {
-            e.preventDefault();
-            openImageModal(image.src);
-        });
-    });
+        render();
+    };
 
     document.querySelectorAll('.blog-content img').forEach(image => {
         let touchStartTime = 0;
