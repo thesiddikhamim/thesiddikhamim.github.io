@@ -512,8 +512,6 @@ footer p {
     height: 2rem;
     fill: white; /* Inherit color from the parent 'a' tag */
 }
-
-
 /* Skills Accordion Section */
 .skills-section {
     width: 100%;
@@ -717,3 +715,17 @@ footer p {
     /* 40px */
     margin-bottom: 0;
 }
+
+
+
+.email-link {
+    color: inherit; /* Inherits the white color from the parent <p> tag */
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.email-link:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
