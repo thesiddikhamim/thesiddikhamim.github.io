@@ -389,7 +389,7 @@ h3 {
 
 .project-image {
     width: auto;
-    height: auto; /* Gives images a consistent shape */
+    height: 20rem; /* Gives images a consistent shape */
 
     display: block;
 }
