@@ -63,7 +63,7 @@ header {
 }
 
 header h1 {
-    font-family: 'Playfair Display', 'Bookerly Bold', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 4rem;
     font-style: normal;
     font-weight:300;
@@ -88,7 +88,7 @@ header p {
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
     max-width: 95%;
-    font-family: 'Bookerly', 'DM sans','Geist Mono', 'Merriweather';
+    font-family: 'Geist Mono', 'DM sans', 'Merriweather';
     font-size: 1.2rem;
     font-weight: 500;
 }
