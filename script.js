@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close menu when a link is clicked
     document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", closeMenu));
-    
+
     // Close menu when clicking outside of it
     body.addEventListener('click', (e) => {
         if (hamburger.classList.contains('active') && !navMenu.contains(e.target)) {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return new Promise((resolve) => {
                 let completed = 0;
                 const total = endIndex - startIndex;
-                
+
                 if (total === 0) {
                     resolve();
                     return;
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     setTimeout(() => {
                         card.classList.remove('hidden');
                         card.classList.add('visible');
-                        
+
                         completed++;
                         if (completed === total) {
                             resolve();
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return new Promise((resolve) => {
                 let completed = 0;
                 const total = endIndex - startIndex;
-                
+
                 if (total === 0) {
                     resolve();
                     return;
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     setTimeout(() => {
                         card.classList.remove('visible');
                         card.classList.add('hidden');
-                        
+
                         completed++;
                         if (completed === total) {
                             resolve();
@@ -144,27 +144,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         showMoreBtn.addEventListener('click', async () => {
             if (isAnimating) return;
-            
+
             isAnimating = true;
             showMoreBtn.classList.add('loading');
-            
+
             try {
                 if (currentlyVisible >= allCards.length) {
                     // "Show Less" was clicked
                     const hideStartIndex = itemsPerLoad;
                     const hideEndIndex = currentlyVisible;
-                    
+
                     await hideCardsWithAnimation(hideStartIndex, hideEndIndex);
                     currentlyVisible = itemsPerLoad;
                 } else {
                     // "Show More" was clicked
                     const showStartIndex = currentlyVisible;
                     const showEndIndex = Math.min(currentlyVisible + itemsPerLoad, allCards.length);
-                    
+
                     await showCardsWithAnimation(showStartIndex, showEndIndex);
                     currentlyVisible = showEndIndex;
                 }
-                
+
                 updateProgressBar();
                 updateButtonState();
             } finally {
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
                 return;
             }
-            
+
             if (e.key === 'Escape' || e.key === 'Esc') {
                 closeOverlay();
             } else if (e.key === '+' || e.key === '=') { // Zoom In
@@ -340,7 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const handleMouseMove = (e) => {
             if (!isPanning) return;
-            
+
             const deltaX = e.clientX - lastX;
             const deltaY = e.clientY - lastY;
             lastX = e.clientX;
@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const touch = e.touches[0];
                 const deltaX = Math.abs(touch.clientX - touchStartX);
                 const deltaY = Math.abs(touch.clientY - touchStartY);
-                
+
                 // If the touch has moved more than 10px, consider it a scroll
                 if (deltaX > 10 || deltaY > 10) {
                     hasMoved = true;
@@ -499,12 +499,33 @@ document.addEventListener("DOMContentLoaded", () => {
             const touchDuration = Date.now() - touchStartTime;
             const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartX);
             const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
-            
+
             // Only open zoom if it was a quick tap (less than 300ms) and didn't move much
             if (touchDuration < 300 && !hasMoved && deltaX < 10 && deltaY < 10) {
                 e.preventDefault();
                 openImageModal(image.src);
             }
         }, { passive: false });
+    });
+
+    // --- Projects Section Scroll Animation ---
+    const projectCards = document.querySelectorAll('.project-card');
+
+    const projectObserverOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const projectObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, projectObserverOptions);
+
+    projectCards.forEach(card => {
+        projectObserver.observe(card);
     });
 });
