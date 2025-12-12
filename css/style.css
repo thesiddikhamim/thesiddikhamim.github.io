@@ -189,20 +189,44 @@ h3 {
 }
 
 /* Staggered animation for cards */
-.certificate-card:nth-child(1) { animation-delay: 0.1s; }
-.certificate-card:nth-child(2) { animation-delay: 0.2s; }
-.certificate-card:nth-child(3) { animation-delay: 0.3s; }
-.certificate-card:nth-child(4) { animation-delay: 0.4s; }
-.certificate-card:nth-child(5) { animation-delay: 0.5s; }
-.certificate-card:nth-child(6) { animation-delay: 0.6s; }
-.certificate-card:nth-child(7) { animation-delay: 0.7s; }
-.certificate-card:nth-child(8) { animation-delay: 0.8s; }
+.certificate-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.certificate-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.certificate-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.certificate-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.certificate-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.certificate-card:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.certificate-card:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+.certificate-card:nth-child(8) {
+    animation-delay: 0.8s;
+}
 
 @keyframes slideInUp {
     from {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -210,9 +234,17 @@ h3 {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .show-more-button {
@@ -311,8 +343,13 @@ h3 {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Progress indicator */
@@ -346,6 +383,7 @@ h3 {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -355,8 +393,9 @@ h3 {
 
 /* --- Projects Section --- */
 #projects {
-    padding: 80px 5%;
-    background-color: #fcfcfc;
+    padding: 100px 5%;
+    background-color: #f8f9fa;
+    /* Slightly off-white for contrast */
     position: relative;
     overflow: hidden;
 }
@@ -364,35 +403,41 @@ h3 {
 #projects::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.03) 0%, transparent 70%);
+    top: -10%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.05) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: 0;
     pointer-events: none;
 }
 
 .projects-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    /* Slightly wider cards */
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px 0;
+    position: relative;
+    z-index: 1;
 }
 
 .project-card {
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    /* Subtle initial shadow */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     position: relative;
-    opacity: 0; /* For animation */
-    transform: translateY(30px); /* For animation */
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .project-card.visible {
@@ -401,14 +446,16 @@ h3 {
 }
 
 .project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px -10px rgba(138, 43, 226, 0.15);
-    border-color: rgba(138, 43, 226, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: rgba(138, 43, 226, 0.3);
+    /* Subtle purple border on hover */
 }
 
 .project-image-wrapper {
     width: 100%;
-    height: 220px;
+    height: 240px;
+    /* Taller image area */
     overflow: hidden;
     position: relative;
 }
@@ -417,31 +464,90 @@ h3 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform 0.7s ease;
 }
 
 .project-card:hover .project-image {
-    transform: scale(1.08);
+    transform: scale(1.1);
+}
+
+/* Image Overlay */
+.project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+    opacity: 1;
+}
+
+.view-project-btn {
+    padding: 10px 24px;
+    background-color: white;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    transform: translateY(20px);
+    transition: transform 0.3s ease, background-color 0.2s;
+}
+
+.project-card:hover .view-project-btn {
+    transform: translateY(0);
+}
+
+.view-project-btn:hover {
+    background-color: #f0f0f0;
 }
 
 .card-content {
-    padding: 30px;
+    padding: 32px;
+    /* More padding */
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
+/* New Tag Styles */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.tag {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #8A2BE2;
+    background-color: rgba(138, 43, 226, 0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+}
+
 .project-title-link {
     text-decoration: none;
     color: inherit;
-    display: inline-block;
+    display: block;
 }
 
 .project-title-link h3 {
     font-family: 'Poppins', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #2d2d2d;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
     margin-bottom: 12px;
     line-height: 1.3;
     transition: color 0.3s ease;
@@ -454,50 +560,54 @@ h3 {
 .project-description {
     font-family: 'DM Sans', sans-serif;
     font-size: 1rem;
-    color: #666;
+    color: #6b7280;
+    /* Neutral gray */
     line-height: 1.7;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
     flex-grow: 1;
 }
 
-.project-links {
-    margin-top: auto;
+.project-footer {
+    padding-top: 20px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.project-button {
+.details-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #8A2BE2;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 12px 28px;
-    background: linear-gradient(135deg, #8A2BE2 0%, #9932CC 100%);
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    border-radius: 50px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
-    width: 100%;
-    position: relative;
-    overflow: hidden;
+    gap: 6px;
+    transition: gap 0.2s ease;
 }
 
-.project-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
-}
-
-.project-button:active {
-    transform: translateY(0);
+.details-link:hover {
+    gap: 10px;
+    /* Arrow moves slightly */
+    text-decoration: underline;
 }
 
 /* Staggered Animation Delays */
-.project-card:nth-child(1) { transition-delay: 0ms, 0ms, 0ms; } /* property-name | duration | easing-function | delay */
-/* We only want delay on the initial appearance, not hover */
-.project-card.visible:nth-child(1) { transition-delay: 0ms; }
-.project-card.visible:nth-child(2) { transition-delay: 100ms; }
-.project-card.visible:nth-child(3) { transition-delay: 200ms; }
+.project-card:nth-child(1) {
+    transition-delay: 0ms, 0ms, 0ms;
+}
+
+.project-card.visible:nth-child(1) {
+    transition-delay: 0ms;
+}
+
+.project-card.visible:nth-child(2) {
+    transition-delay: 150ms;
+}
+
+.project-card.visible:nth-child(3) {
+    transition-delay: 300ms;
+}
 
 /* Adjusting footer social icons for better consistency */
 .social-container a svg {
@@ -541,7 +651,8 @@ h3 {
 footer {
     background-color: rgb(0, 0, 0);
     color: rgb(0, 0, 0);
-    padding: 3rem 1.5rem; /* Added horizontal padding */
+    padding: 3rem 1.5rem;
+    /* Added horizontal padding */
     text-align: center;
 }
 
@@ -549,36 +660,45 @@ footer p {
     font-size: 1rem;
     color: white;
     opacity: 0.8;
-    margin-top: 1.5rem; /* Add space above email */
-    word-wrap: break-word; /* Ensure email doesn't overflow */
+    margin-top: 1.5rem;
+    /* Add space above email */
+    word-wrap: break-word;
+    /* Ensure email doesn't overflow */
 }
 
 .social-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap; /* Allow icons to wrap on smaller screens */
-    gap: 1rem; /* Consistent gap between icons */
+    flex-wrap: wrap;
+    /* Allow icons to wrap on smaller screens */
+    gap: 1rem;
+    /* Consistent gap between icons */
     padding: 1rem 0;
 }
 
 .social-container a {
-    display: inline-flex; /* Use flex to center the SVG inside */
+    display: inline-flex;
+    /* Use flex to center the SVG inside */
     align-items: center;
     justify-content: center;
-    color: #333; /* Use color for the SVG fill */
+    color: #333;
+    /* Use color for the SVG fill */
     transition: color 0.3s ease;
 }
 
 .social-container a:hover {
-    color: #c6b7d3; /* Updated hover color to match theme */
+    color: #c6b7d3;
+    /* Updated hover color to match theme */
 }
 
 .social-container a svg {
     width: 2rem;
     height: 2rem;
-    fill: white; /* Inherit color from the parent 'a' tag */
+    fill: white;
+    /* Inherit color from the parent 'a' tag */
 }
+
 /* Skills Accordion Section */
 .skills-section {
     width: 100%;
@@ -786,7 +906,8 @@ footer p {
 
 
 .email-link {
-    color: inherit; /* Inherits the white color from the parent <p> tag */
+    color: inherit;
+    /* Inherits the white color from the parent <p> tag */
     text-decoration: none;
     transition: opacity 0.3s ease;
 }

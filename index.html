@@ -211,41 +211,65 @@
 
             <!-- Projects Section -->
             <section id="projects">
-                <h2>My Projects</h2>
+                <h2>Featured Projects</h2>
                 <div class="projects-container">
                     <!-- Project 1 -->
-                    <div class="project-card">
+                    <article class="project-card">
                         <div class="project-image-wrapper">
-                            <img src="projects/household_income.jpg" alt="household_income" class="project-image">
+                            <img src="projects/household_income.jpg"
+                                alt="Analysis of household income distribution graph" class="project-image">
+                            <div class="project-overlay">
+                                <a href="projects/income-inequality.html" class="view-project-btn">View Analysis</a>
+                            </div>
                         </div>
                         <div class="card-content">
+                            <div class="project-tags">
+                                <span class="tag">Data Analysis</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">Matplotlib</span>
+                            </div>
                             <a href="projects/income-inequality.html" class="project-title-link">
                                 <h3>Income Inequality in Bangladesh</h3>
                             </a>
-                            <p class="project-description">An analysis of household income distribution in Bangladesh,
-                                visualizing the share of income held by the richest vs. the poorest from 1983 to 2022.
+                            <p class="project-description">
+                                A comprehensive analysis of household income distribution in Bangladesh (1983–2022),
+                                visualizing the widening gap between the richest and poorest demographics.
                             </p>
-                            <div class="project-links">
-                                <a href="projects/income-inequality.html" class="project-button">View Analysis</a>
+                            <div class="project-footer">
+                                <a href="projects/income-inequality.html" class="details-link">Read Case Study <i
+                                        class="fa-solid fa-arrow-right"></i></a>
                             </div>
                         </div>
-                    </div>
+                    </article>
+
                     <!-- Project 2 -->
-                    <div class="project-card">
+                    <article class="project-card">
                         <div class="project-image-wrapper">
-                            <img src="projects/gini_coefficient.jpg" alt="gini-coefficient" class="project-image">
+                            <img src="projects/gini_coefficient.jpg" alt="Gini coefficient trend graph"
+                                class="project-image">
+                            <div class="project-overlay">
+                                <a href="projects/gini-coefficient.html" class="view-project-btn">View Analysis</a>
+                            </div>
                         </div>
                         <div class="card-content">
+                            <div class="project-tags">
+                                <span class="tag">Data Visualization</span>
+                                <span class="tag">Pandas</span>
+                                <span class="tag">Research</span>
+                            </div>
                             <a href="projects/gini-coefficient.html" class="project-title-link">
-                                <h3>Gini Coefficient Trend in Bangladesh</h3>
+                                <h3>Gini Coefficient Trend</h3>
                             </a>
-                            <p class="project-description">This project tracks the Gini coefficient in Bangladesh from
-                                1983 to 2022, providing a clear measure of rising inequality over four decades.</p>
-                            <div class="project-links">
-                                <a href="projects/gini-coefficient.html" class="project-button">View Analysis</a>
+                            <p class="project-description">
+                                Tracking the Gini coefficient in Bangladesh over four decades to quantify the rise in
+                                economic inequality using historical data points.
+                            </p>
+                            <div class="project-footer">
+                                <a href="projects/gini-coefficient.html" class="details-link">Read Case Study <i
+                                        class="fa-solid fa-arrow-right"></i></a>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 </div>
             </section>
 
