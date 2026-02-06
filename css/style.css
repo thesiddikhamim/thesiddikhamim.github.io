@@ -4,6 +4,7 @@
     --text-color: #000000;
     --text-secondary: #4f4949;
     --border-color: #eaeaea;
+    --accent-color: #a78bfa;
     --transition: all 0.3s ease;
     --container-width: 1200px;
     --header-height: 100vh;
@@ -145,7 +146,7 @@ h3 {
 
 .verify-button {
     display: block;
-    background-color: #8A2BE2;
+    background-color: var(--accent-color);
     color: #ffffff;
     padding: 12px 15px;
     text-align: center;
@@ -295,17 +296,17 @@ h3 {
 }
 
 .show-more-button:hover .button-text {
-    color: #8A2BE2;
+    color: var(--accent-color);
 }
 
 .show-more-button:hover .button-icon {
-    border-color: #8A2BE2;
+    border-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
 }
 
 .show-more-button:hover .button-icon::before {
-    border-top-color: #8A2BE2;
+    border-top-color: var(--accent-color);
 }
 
 .show-more-button:active .button-icon {
@@ -365,7 +366,7 @@ h3 {
 
 .certificates-progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #8A2BE2, #9932CC);
+    background: linear-gradient(90deg, var(--accent-color), #9932CC);
     border-radius: 2px;
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     width: 0%;
@@ -530,7 +531,7 @@ h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 0.75rem;
     font-weight: 500;
-    color: #8A2BE2;
+    color: var(--accent-color);
     background-color: rgba(138, 43, 226, 0.08);
     padding: 4px 10px;
     border-radius: 6px;
@@ -554,7 +555,7 @@ h3 {
 }
 
 .project-card:hover .project-title-link h3 {
-    color: #8A2BE2;
+    color: var(--accent-color);
 }
 
 .project-description {
@@ -578,7 +579,7 @@ h3 {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-size: 0.9rem;
-    color: #8A2BE2;
+    color: var(--accent-color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -738,7 +739,7 @@ footer p {
 
 .icon {
     font-size: 1.5rem;
-    color: #8A2BE2;
+    color: var(--accent-color);
     width: 30px;
     text-align: center;
 }
