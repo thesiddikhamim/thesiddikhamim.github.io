@@ -112,8 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
             allCards.forEach((card, index) => {
                 if (index < itemsPerLoad) {
                     card.classList.add('visible');
+                    card.style.display = 'flex';
                 } else {
                     card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
         };
@@ -126,15 +128,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const showCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
                 let completed = 0;
-                const total = endIndex - startIndex;
-                if (total === 0) { resolve(); return; }
+                const cardsToShow = allCards.slice(startIndex, endIndex);
+                if (cardsToShow.length === 0) { resolve(); return; }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                cardsToShow.forEach((card, index) => {
+                    // Prepare for animation
+                    card.style.display = 'flex';
+                    // Force reflow
+                    void card.offsetHeight;
+                    
                     setTimeout(() => {
                         card.classList.remove('hidden');
                         card.classList.add('visible');
                         completed++;
-                        if (completed === total) resolve();
+                        if (completed === cardsToShow.length) resolve();
                     }, index * 100);
                 });
             });
@@ -143,15 +150,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const hideCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
                 let completed = 0;
-                const total = endIndex - startIndex;
-                if (total === 0) { resolve(); return; }
+                const cardsToHide = allCards.slice(startIndex, endIndex);
+                if (cardsToHide.length === 0) { resolve(); return; }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                cardsToHide.forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.remove('visible');
                         card.classList.add('hidden');
-                        completed++;
-                        if (completed === total) resolve();
+                        
+                        // After animation finishes (approx 500ms in CSS)
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                            completed++;
+                            if (completed === cardsToHide.length) resolve();
+                        }, 500);
                     }, index * 50);
                 });
             });

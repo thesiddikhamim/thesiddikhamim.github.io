@@ -204,16 +204,7 @@ h3 {
 }
 
 .certificate-card.hidden {
-    opacity: 0;
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    overflow: hidden;
-    border: none;
-    transform: translateY(-15px) scale(0.97);
-    transition: all 0.5s ease;
+    display: none;
 }
 
 .certificate-card.visible {
@@ -283,107 +274,110 @@ h3 {
 /* ── Show More Button ── */
 .show-more-button {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    margin: 0 auto;
-    padding: 0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    background: transparent;
-    border: none;
+    justify-content: center;
+    margin: 3rem auto 0;
+    padding: 12px 28px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    letter-spacing: 0.1em;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-family: 'Inter', sans-serif;
     gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.show-more-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-light);
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.show-more-button:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.show-more-button:hover::before {
+    opacity: 0.03;
 }
 
 .show-more-button .button-text {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    margin: 0;
+    position: relative;
+    z-index: 1;
     transition: color 0.3s ease;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
 }
 
 .show-more-button .button-icon {
-    width: 36px;
-    height: 36px;
-    border: 1px solid rgba(232, 224, 212, 0.15);
-    border-radius: 50%;
+    width: 20px;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-}
-
-.show-more-button .button-icon::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 7px solid rgba(232, 224, 212, 0.4);
-    transition: all 0.3s ease;
+    z-index: 1;
+    color: var(--accent);
+    font-size: 0.75rem;
 }
 
 .show-more-button:hover .button-text {
     color: var(--accent);
 }
 
-.show-more-button:hover .button-icon {
-    border-color: var(--accent);
-    transform: translateY(-2px);
+.show-more-button:active {
+    transform: translateY(-1px);
 }
 
-.show-more-button:hover .button-icon::before {
-    border-top-color: var(--accent);
-}
-
-.show-more-button:active .button-icon {
-    transform: translateY(0);
-}
-
-.show-more-button.less .button-icon::before {
+.show-more-button.less .button-icon {
     transform: rotate(180deg);
-}
-
-.show-more-button.less:hover .button-icon {
-    transform: translateY(2px);
 }
 
 .show-more-button.loading {
     pointer-events: none;
-    opacity: 0.6;
-    animation: pulse 1.5s infinite;
+    opacity: 0.8;
 }
 
-.show-more-button.loading .button-icon::before {
+.show-more-button.loading .button-icon {
+    animation: spin 1s linear infinite;
+}
+
+.show-more-button.loading .button-icon i {
     display: none;
 }
 
 .show-more-button.loading .button-icon::after {
     content: '';
     position: absolute;
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid transparent;
-    border-top: 1.5px solid var(--accent);
+    width: 14px;
+    height: 14px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--accent);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
+    from {
         transform: rotate(0deg);
     }
 
-    100% {
+    to {
         transform: rotate(360deg);
     }
 }
@@ -391,20 +385,33 @@ h3 {
 /* Progress indicator */
 .certificates-progress {
     width: 100%;
-    height: 2px;
-    background-color: rgba(232, 224, 212, 0.06);
-    border-radius: 1px;
-    margin: 20px auto;
+    height: 3px;
+    background-color: var(--border-subtle);
+    border-radius: 100px;
+    margin: 3rem auto 2rem;
     overflow: hidden;
-    max-width: 250px;
+    max-width: 400px;
 }
 
 .certificates-progress-bar {
     height: 100%;
-    background: var(--accent);
-    border-radius: 1px;
-    transition: width 0.6s ease;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    border-radius: 10px;
+    transition: width 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     width: 0%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .show-more-button {
+        width: calc(100% - 40px);
+        max-width: 320px;
+        padding: 14px 20px;
+    }
+
+    .certificates-progress {
+        max-width: 80%;
+    }
 }
 
 
