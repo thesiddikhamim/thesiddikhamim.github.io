@@ -1,0 +1,297 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f7f7f7;
+    color: #333333;
+    font-family: 'Merriweather', 'Georgia', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* Header / Meta section */
+.review-header {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.review-header .book-cover {
+    display: block;
+    margin-right: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-header .book-cover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.review-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    margin: 0 0 8px 0;
+    font-size: 46px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+}
+
+.book-title a {
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.book-title a:hover {
+    color: #ed7d31;
+    text-decoration: none;
+}
+
+.book-author {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.book-author a {
+    font-weight: 600;
+    color: #444;
+    text-decoration: none;
+}
+
+.book-author a:hover {
+    color: #ed7d31;
+    text-decoration: underline;
+}
+
+/* Rating UI */
+.book-rating {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 8px 18px;
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: fit-content;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.book-rating::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    transform: skewX(-25deg);
+    transition: all 0.6s ease;
+}
+
+.book-rating:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(237, 125, 49, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1);
+    border-color: rgba(237, 125, 49, 0.3);
+}
+
+.book-rating:hover::before {
+    left: 150%;
+}
+
+.rating-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #666;
+    margin-right: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.stars {
+    color: transparent;
+    background: linear-gradient(90deg, #ff9a00, #ffc107);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin-right: 18px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(255, 154, 0, 0.3));
+    transition: filter 0.3s ease;
+}
+
+.book-rating:hover .stars {
+    filter: drop-shadow(0 4px 10px rgba(255, 154, 0, 0.6));
+}
+
+.rating-link {
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ed7d31 0%, #d85d0d 100%);
+    padding: 6px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(237, 125, 49, 0.2);
+}
+
+.rating-link:hover {
+    background: linear-gradient(135deg, #f78d45 0%, #e56a16 100%);
+    box-shadow: 0 6px 15px rgba(237, 125, 49, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Paragraph styling */
+p {
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #2c2c2c;
+}
+
+/* Drop cap for first paragraph */
+.content>p:first-of-type::first-letter {
+    float: left;
+    font-size: 80px;
+    line-height: 60px;
+    padding-top: 4px;
+    padding-right: 8px;
+    padding-left: 3px;
+    font-weight: 700;
+    color: #2c2c2c;
+    font-family: 'Georgia', serif;
+}
+
+/* Emphasized Text */
+.highlight {
+    font-style: italic;
+    font-weight: 700;
+    border-bottom: 1px solid #c0c0c0;
+    padding-bottom: 1px;
+}
+
+/* Blockquote styling */
+blockquote {
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 700;
+    margin: 50px 0;
+    padding: 0 0 0 80px;
+    position: relative;
+    color: #2c2c2c;
+    border: none;
+}
+
+blockquote::before {
+    content: "\201C";
+    /* Quote mark */
+    font-family: 'Georgia', serif;
+    position: absolute;
+    left: 10px;
+    top: -20px;
+    font-size: 100px;
+    color: #F87D39;
+    /* Orange matching the image */
+    line-height: 1;
+    font-style: normal;
+}
+
+/* Footer link */
+.review-footer {
+    margin-top: 50px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.review-footer a {
+    color: #888;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.review-footer a:hover {
+    color: #ed7d31;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+
+    .container {
+        margin: 30px auto;
+        padding: 0 16px;
+    }
+
+    .review-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .review-header .book-cover {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .book-title {
+        font-size: 34px;
+    }
+
+    .book-rating {
+        margin: 0 auto;
+    }
+
+    p {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .content>p:first-of-type::first-letter {
+        font-size: 60px;
+        line-height: 48px;
+        padding-top: 2px;
+        padding-right: 6px;
+    }
+
+    blockquote {
+        font-size: 20px;
+        margin: 30px 0;
+        padding: 0 0 0 50px;
+    }
+
+    blockquote::before {
+        font-size: 70px;
+        left: 5px;
+        top: -10px;
+    }
+
+    .review-footer {
+        margin-top: 30px;
+        text-align: center;
+    }
+}
