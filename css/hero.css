@@ -1,43 +1,106 @@
+/* ═══════════════════════════════════════════════════════════
+   HERO — Editorial Warm Dark Theme with Spotlight
+   ═══════════════════════════════════════════════════════════ */
+
 @font-face {
-  font-family: 'Bookerly'; /* set name */
-  src: url(/font/Bookerly.ttf) format('truetype'); /* url of the font */
+    font-family: 'Bookerly';
+    src: url(/font/Bookerly.ttf) format('truetype');
 }
+
 @font-face {
-  font-family: 'Bookerly Bold'; /* set name */
-  src: url(/font/Bookerly-Bold.ttf) format('truetype'); /* url of the font */
+    font-family: 'Bookerly Bold';
+    src: url(/font/Bookerly-Bold.ttf) format('truetype');
 }
-/* Header / Hero Section */
+
+/* ── Header / Hero ── */
 header {
     position: relative;
     width: 100%;
-    height: var(--header-height);
-    background: white;
+    min-height: 100vh;
+    background: #0c0b09;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0;
-    color: var(--text-color);
+    color: #e8e0d4;
     overflow: hidden;
 }
 
+/* ── Spotlight / Gradient Background ── */
+.gradient-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Warm spotlight beam from bottom center */
+.gradient-bg .blob:nth-child(1) {
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 800px;
+    background: conic-gradient(from 180deg at 50% 100%,
+            transparent 130deg,
+            rgba(201, 169, 110, 0.06) 170deg,
+            rgba(201, 169, 110, 0.12) 180deg,
+            rgba(201, 169, 110, 0.06) 190deg,
+            transparent 230deg);
+    border-radius: 0;
+    filter: blur(2px);
+    opacity: 1;
+    animation: none;
+}
+
+/* Subtle warm ambient glow top-right */
+.gradient-bg .blob:nth-child(2) {
+    position: absolute;
+    top: -15%;
+    right: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(201, 169, 110, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 1;
+    animation: none;
+}
+
+/* Very subtle warm glow left */
+.gradient-bg .blob:nth-child(3) {
+    position: absolute;
+    bottom: 20%;
+    left: -5%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(201, 169, 110, 0.025) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 1;
+    animation: none;
+}
+
+/* ── Header Content ── */
 .header-content {
     position: relative;
     z-index: 2;
     width: 50%;
     padding: 0 5rem;
     opacity: 0;
-    animation: fadeIn 1s ease forwards;
+    animation: fadeIn 1s ease 0.3s forwards;
 }
 
-/* --- Desktop / Large screens --- */
 .header-image {
     position: relative;
+    z-index: 2;
     width: 50%;
-    /* half of parent container */
     height: 100%;
     overflow: hidden;
     opacity: 0;
-    animation: slideIn 1.8s ease forwards;
+    animation: slideIn 1.2s ease 0.5s forwards;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -45,59 +108,153 @@ header {
 }
 
 .header-image img {
-    width: 70%;
+    width: 60%;
     height: auto;
-    /* maintain aspect ratio */
-    max-width: 70%;
+    max-width: 60%;
     max-height: 70vh;
-    /* prevent image from exceeding viewport */
     object-fit: contain;
     object-position: right center;
-    transform: scale(1.05);
-    transition: var(--transition);
-    margin-right: 0;
+    transition: transform 0.5s ease;
 }
 
 .header-image:hover img {
-    transform: scale(1);
+    transform: scale(1.02);
 }
 
 header h1 {
-    font-family: 'Bookerly Bold','Playfair Display', serif;
-    font-size: 4rem;
-    font-style: normal;
-    font-weight:300;
-    line-height: 1.2;
+    font-family: 'Playfair Display', 'Georgia', serif;
+    font-size: 3.6rem;
+    font-weight: 400;
+    line-height: 1.15;
     margin-bottom: 1.5rem;
-    color: var(--primary-color);
+    color: #e8e0d4;
+    letter-spacing: -0.01em;
+}
+
+/* Make the first name italic + gold like the reference "Central" */
+header h1 .accent-word {
+    font-style: italic;
+    color: #c9a96e;
 }
 
 header h2 {
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    margin-bottom: 2rem;
-    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    color: rgba(201, 169, 110, 0.7);
+    text-align: left;
 }
 
 header p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.85;
+    color: rgba(232, 224, 212, 0.5);
+    margin-bottom: 2rem;
     max-width: 95%;
-    font-family: 'DM sans','Geist Mono', 'Merriweather';
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
-/* Animations */
+/* ── Scroll Indicator ── */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+    animation: fadeInCenter 1s ease 1.5s forwards;
+}
+
+.scroll-indicator .scroll-mouse {
+    width: 22px;
+    height: 38px;
+    border: 1px solid rgba(201, 169, 110, 0.3);
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+}
+
+.scroll-indicator .scroll-dot {
+    width: 2px;
+    height: 6px;
+    background: #c9a96e;
+    border-radius: 2px;
+    animation: mouseScroll 2s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+}
+
+.scroll-indicator span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(232, 224, 212, 0.4);
+    animation: textBounce 2s ease-in-out infinite;
+}
+
+@keyframes mouseScroll {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(6px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+}
+
+@keyframes textBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translateY(3px);
+        opacity: 0.7;
+    }
+}
+
+@keyframes fadeInCenter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* ── Animations ── */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(25px);
     }
 
     to {
@@ -118,7 +275,7 @@ header p {
     }
 }
 
-/* --- Mobile (up to 480px) --- */
+/* ── Mobile (up to 480px) ── */
 @media screen and (max-width: 480px) {
     header {
         flex-direction: column-reverse;
@@ -130,7 +287,7 @@ header p {
 
     .header-content {
         width: 100%;
-        padding: 2rem 1rem;
+        padding: 2rem 1.5rem;
         text-align: center;
     }
 
@@ -142,37 +299,42 @@ header p {
     }
 
     .header-image img {
-        width: 100%;
-        max-width: 300px;
+        width: 75%;
+        max-width: 260px;
         height: auto;
         max-height: 40vh;
         object-position: center;
-        transform: scale(1); /* no zoom on mobile */
-    }
-    .header-image:hover img {
-        transform: scale(1); /* disable zoom on small screens */
     }
 
     header h1 {
-        font-size: 2.5rem ;
-        margin-bottom: 1.5rem;
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
     }
 
     header h2 {
-        font-size: 0.9rem;
-        margin-bottom: 2rem;
+        font-size: 0.7rem;
+        text-align: center;
+        margin-bottom: 1.2rem;
     }
 
     header p {
-        font-size: 1rem;
+        font-size: 0.92rem;
         line-height: 1.8;
-        margin-bottom: 2rem;
         max-width: 100%;
     }
 
+    .scroll-indicator {
+        bottom: 1.5rem;
+        animation: fadeInCenter 1s ease 1.5s forwards;
+    }
+
+    .gradient-bg .blob:nth-child(1) {
+        width: 350px;
+        height: 500px;
+    }
 }
 
-/* Tablet Styles */
+/* ── Tablet ── */
 @media screen and (min-width: 481px) and (max-width: 768px) {
     header {
         flex-direction: column-reverse;
@@ -182,7 +344,7 @@ header p {
 
     .header-content {
         width: 100%;
-        padding: 3rem;
+        padding: 3rem 2rem;
         text-align: center;
     }
 
@@ -193,23 +355,23 @@ header p {
     }
 
     .header-image img {
-        width: 60%;
+        width: 50%;
         height: auto;
-        max-width: 60%;
+        max-width: 50%;
         max-height: 50vh;
         object-position: center;
-        transform: scale(1.03);
-    }
-    .header-image:hover img {
-        transform: scale(1);
     }
 
     header h1 {
-        font-size: 3rem;
+        font-size: 2.6rem;
+    }
+
+    header h2 {
+        text-align: center;
     }
 }
 
-/* Small Desktop Styles */
+/* ── Small Desktop ── */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
     .header-image {
         width: 100%;
@@ -218,12 +380,11 @@ header p {
     }
 
     .header-image img {
-        width: 60%;
+        width: 50%;
         height: auto;
-        max-width: 60%;
+        max-width: 50%;
         max-height: 50vh;
         object-position: center;
-        transform: scale(1.03);
     }
 
     .header-content {
@@ -231,6 +392,6 @@ header p {
     }
 
     header h1 {
-        font-size: 3.5rem;
+        font-size: 3rem;
     }
 }

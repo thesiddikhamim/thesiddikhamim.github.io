@@ -1,24 +1,41 @@
-/* Navbar Styling */
+/* ═══════════════════════════════════════════════════════════
+   NAVBAR — Editorial Warm Dark Theme
+   ═══════════════════════════════════════════════════════════ */
+
 .navbar {
     display: flex;
-    font-family: "DM sans", "Geist Mono", Merriweather;
+    font-family: 'Inter', sans-serif;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
+    padding: 1.1rem 2.5rem;
+    background: rgba(12, 11, 9, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232, 224, 212, 0.04);
     position: sticky;
     top: 0;
     width: 100%;
     z-index: 1000;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.navbar.scrolled {
+    background: rgba(12, 11, 9, 0.94);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nav-logo {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #333;
+    font-size: 1.4rem;
+    font-weight: 500;
     text-decoration: none;
-    font-family:'Merriweather';
+    font-family: 'Playfair Display', 'Georgia', serif;
+    color: #e8e0d4;
+    letter-spacing: 0;
+    transition: color 0.3s ease;
+}
+
+.nav-logo:hover {
+    color: #c9a96e;
 }
 
 .nav-menu {
@@ -26,19 +43,46 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    gap: 2rem;
+    gap: 2.5rem;
 }
 
 .nav-link {
     text-decoration: none;
-    color: #555;
-    font-family: "DM sans", "Geist Mono", Merriweather;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
+    color: rgba(232, 224, 212, 0.5);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: #c9a96e;
+    transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #007bff;
+    color: #e8e0d4;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link.active-link {
+    color: #e8e0d4;
+}
+
+.nav-link.active-link::after {
+    width: 100%;
 }
 
 .hamburger {
@@ -48,24 +92,28 @@
 
 .bar {
     display: block;
-    width: 25px;
-    height: 3px;
+    width: 22px;
+    height: 2px;
     margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    background-color: #333;
+    background-color: rgba(232, 224, 212, 0.7);
+    border-radius: 1px;
 }
 
-/* Responsive Media Query */
-@media(max-width: 768px) {
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
     .hamburger {
         display: block;
-        position: relative; /* Needed for z-index to work */
-        z-index: 1001;     /* Ensure it's above the menu */
+        position: relative;
+        z-index: 1001;
     }
 
     .hamburger.active .bar {
-        background-color: #333; /* Keep color consistent when active */
+        background-color: rgba(232, 224, 212, 0.8);
     }
 
     .hamburger.active .bar:nth-child(2) {
@@ -73,38 +121,39 @@
     }
 
     .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
+        transform: translateY(7px) rotate(45deg);
     }
 
     .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-7px) rotate(-45deg);
     }
 
     .nav-menu {
         position: fixed;
         right: -100%;
-        top: 0; /* Start from the very top */
-        height: 100vh; /* Full viewport height */
-        width: 100%;   /* Full viewport width */
-        gap: 2rem; /* Increase gap for better spacing */
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        gap: 2.5rem;
         flex-direction: column;
-        justify-content: center; /* Center items vertically */
-        align-items: center;     /* Center items horizontally */
-        background-color: rgba(255, 255, 255, 0.98); /* Slightly transparent white */
-        backdrop-filter: blur(8px); /* Frosted glass effect */
-        -webkit-backdrop-filter: blur(8px);
+        justify-content: center;
+        align-items: center;
+        background: rgba(12, 11, 9, 0.97);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
         text-align: center;
-        transition: right 0.4s ease-in-out; /* Smoother transition */
-        box-shadow: none; /* Remove shadow as it's full screen */
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .nav-item {
-        margin: 0; /* Remove margin as we are using gap */
+        margin: 0;
     }
 
     .nav-link {
-        font-size: 1.5rem; /* Larger font for full-screen menu */
-        font-weight: 600;
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        color: rgba(232, 224, 212, 0.6);
     }
 
     .nav-menu.active {

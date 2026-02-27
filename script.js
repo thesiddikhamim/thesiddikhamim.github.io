@@ -1,25 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Refined Accordion Logic ---
-    const accordionHeaders = document.querySelectorAll(".accordion-header");
+    // ═══════════════════════════════════════════════════════════
+    // Scroll Reveal for [data-animate] Elements
+    // ═══════════════════════════════════════════════════════════
+    const animatedElements = document.querySelectorAll('[data-animate]');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
+    animatedElements.forEach(el => revealObserver.observe(el));
+
+    // ═══════════════════════════════════════════════════════════
+    // Navbar — background on scroll + active link highlight
+    // ═══════════════════════════════════════════════════════════
+    const navbar = document.querySelector('.navbar');
+    const sections = document.querySelectorAll('section[id], .skills-section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const updateNavbar = () => {
+        // Solid background after scrolling past 60px
+        if (window.scrollY > 60) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Active nav link based on scroll position
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 120;
+            if (window.scrollY >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active-link');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active-link');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    updateNavbar();
+
+    // ═══════════════════════════════════════════════════════════
+    // Accordion
+    // ═══════════════════════════════════════════════════════════
+    const accordionHeaders = document.querySelectorAll(".accordion-header");
     accordionHeaders.forEach(header => {
         header.addEventListener("click", () => {
             const currentItem = header.parentElement;
             const wasActive = currentItem.classList.contains("active");
 
-            // Close all accordion items first
             document.querySelectorAll('.accordion-item').forEach(item => {
                 item.classList.remove('active');
             });
 
-            // If the clicked item wasn't the one already active, open it
             if (!wasActive) {
                 currentItem.classList.add("active");
             }
         });
     });
 
-    // --- Improved Mobile Navigation Logic ---
+    // ═══════════════════════════════════════════════════════════
+    // Mobile Navigation
+    // ═══════════════════════════════════════════════════════════
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav-menu");
     const body = document.body;
@@ -31,23 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     hamburger.addEventListener("click", (e) => {
-        e.stopPropagation(); // Prevents the click from bubbling up to the body
+        e.stopPropagation();
         hamburger.classList.toggle("active");
         navMenu.classList.toggle("active");
         body.classList.toggle("no-scroll");
     });
 
-    // Close menu when a link is clicked
     document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", closeMenu));
-    
-    // Close menu when clicking outside of it
+
     body.addEventListener('click', (e) => {
         if (hamburger.classList.contains('active') && !navMenu.contains(e.target)) {
             closeMenu();
         }
     });
 
-    // --- Enhanced "Show More" Certificates Logic ---
+    // ═══════════════════════════════════════════════════════════
+    // "Show More" Certificates
+    // ═══════════════════════════════════════════════════════════
     const showMoreBtn = document.getElementById('show-more-certs-btn');
     if (showMoreBtn) {
         const certsContainer = document.querySelector('.certificates-container');
@@ -57,13 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentlyVisible = itemsPerLoad;
         let isAnimating = false;
 
-        // Initialize cards with staggered animation
         const initializeCards = () => {
             allCards.forEach((card, index) => {
                 if (index < itemsPerLoad) {
                     card.classList.add('visible');
+                    card.style.display = 'flex';
                 } else {
                     card.classList.add('hidden');
+                    card.style.display = 'none';
                 }
             });
         };
@@ -76,23 +128,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const showCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
                 let completed = 0;
-                const total = endIndex - startIndex;
-                
-                if (total === 0) {
-                    resolve();
-                    return;
-                }
+                const cardsToShow = allCards.slice(startIndex, endIndex);
+                if (cardsToShow.length === 0) { resolve(); return; }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                cardsToShow.forEach((card, index) => {
+                    // Prepare for animation
+                    card.style.display = 'flex';
+                    // Force reflow
+                    void card.offsetHeight;
+                    
                     setTimeout(() => {
                         card.classList.remove('hidden');
                         card.classList.add('visible');
-                        
                         completed++;
-                        if (completed === total) {
-                            resolve();
-                        }
-                    }, index * 100); // Staggered reveal
+                        if (completed === cardsToShow.length) resolve();
+                    }, index * 100);
                 });
             });
         };
@@ -100,23 +150,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const hideCardsWithAnimation = (startIndex, endIndex) => {
             return new Promise((resolve) => {
                 let completed = 0;
-                const total = endIndex - startIndex;
-                
-                if (total === 0) {
-                    resolve();
-                    return;
-                }
+                const cardsToHide = allCards.slice(startIndex, endIndex);
+                if (cardsToHide.length === 0) { resolve(); return; }
 
-                allCards.slice(startIndex, endIndex).forEach((card, index) => {
+                cardsToHide.forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.remove('visible');
                         card.classList.add('hidden');
                         
-                        completed++;
-                        if (completed === total) {
-                            resolve();
-                        }
-                    }, index * 50); // Faster hide animation
+                        // After animation finishes (approx 500ms in CSS)
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                            completed++;
+                            if (completed === cardsToHide.length) resolve();
+                        }, 500);
+                    }, index * 50);
                 });
             });
         };
@@ -132,7 +180,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Initial setup
         if (allCards.length <= itemsPerLoad) {
             showMoreBtn.style.display = 'none';
             progressBar.style.display = 'none';
@@ -144,27 +191,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         showMoreBtn.addEventListener('click', async () => {
             if (isAnimating) return;
-            
             isAnimating = true;
             showMoreBtn.classList.add('loading');
-            
+
             try {
                 if (currentlyVisible >= allCards.length) {
-                    // "Show Less" was clicked
-                    const hideStartIndex = itemsPerLoad;
-                    const hideEndIndex = currentlyVisible;
-                    
-                    await hideCardsWithAnimation(hideStartIndex, hideEndIndex);
+                    await hideCardsWithAnimation(itemsPerLoad, currentlyVisible);
                     currentlyVisible = itemsPerLoad;
                 } else {
-                    // "Show More" was clicked
-                    const showStartIndex = currentlyVisible;
-                    const showEndIndex = Math.min(currentlyVisible + itemsPerLoad, allCards.length);
-                    
-                    await showCardsWithAnimation(showStartIndex, showEndIndex);
-                    currentlyVisible = showEndIndex;
+                    const showEnd = Math.min(currentlyVisible + itemsPerLoad, allCards.length);
+                    await showCardsWithAnimation(currentlyVisible, showEnd);
+                    currentlyVisible = showEnd;
                 }
-                
                 updateProgressBar();
                 updateButtonState();
             } finally {
@@ -173,29 +211,20 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Add intersection observer for scroll-triggered animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
+        const certObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animationPlayState = 'running';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        // Observe all certificate cards
-        allCards.forEach(card => {
-            observer.observe(card);
-        });
+        allCards.forEach(card => certObserver.observe(card));
     }
 
-    // --- Image Zoom Functionality for Project Pages ---
-    const viewportMeta = document.querySelector('meta[name="viewport"]');
-
+    // ═══════════════════════════════════════════════════════════
+    // Image Zoom (Project Pages)
+    // ═══════════════════════════════════════════════════════════
     const openImageModal = (imageSrc) => {
         const overlay = document.createElement('div');
         overlay.classList.add('image-zoom-overlay');
@@ -203,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.setAttribute('aria-modal', 'true');
         overlay.setAttribute('aria-label', 'Image viewer');
 
-        // Stage to apply transforms and enable safe panning
         const stage = document.createElement('div');
         stage.classList.add('image-zoom-stage');
 
@@ -211,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
         zoomedImage.src = imageSrc;
         stage.appendChild(zoomedImage);
 
-        // Controls
         const controls = document.createElement('div');
         controls.classList.add('image-zoom-controls');
         const zoomOutBtn = document.createElement('button');
@@ -235,16 +262,10 @@ document.addEventListener("DOMContentLoaded", () => {
         closeButton.innerHTML = '&times;';
         closeButton.setAttribute('aria-label', 'Close image viewer');
 
-        let scale = 1;
-        let minScale = 1;
-        let maxScale = 5;
-        let translateX = 0;
-        let translateY = 0;
-        let isPanning = false;
-        let lastX = 0;
-        let lastY = 0;
-        let lastTouchDistance = null;
-        let doubleTapTimeout = null;
+        let scale = 1, minScale = 1, maxScale = 5;
+        let translateX = 0, translateY = 0;
+        let isPanning = false, lastX = 0, lastY = 0;
+        let lastTouchDistance = null, doubleTapTimeout = null, panAnimationId = null;
 
         const render = () => {
             stage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
@@ -257,23 +278,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = stage.getBoundingClientRect();
             const offsetX = clientX - (rect.left + rect.width / 2);
             const offsetY = clientY - (rect.top + rect.height / 2);
-
             const newScale = clamp(scale * deltaScale, minScale, maxScale);
             const scaleFactor = newScale / scale;
-
-            // Adjust translation so the zoom centers around the pointer
             translateX = translateX - offsetX * (scaleFactor - 1);
             translateY = translateY - offsetY * (scaleFactor - 1);
             scale = newScale;
             render();
         };
 
-        const resetView = () => {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            render();
-        };
+        const resetView = () => { scale = 1; translateX = 0; translateY = 0; render(); };
 
         const closeOverlay = () => {
             overlay.classList.remove('visible');
@@ -281,70 +294,72 @@ document.addEventListener("DOMContentLoaded", () => {
                 overlay.remove();
                 document.body.classList.remove('no-scroll');
                 document.removeEventListener('keydown', handleEsc);
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleMouseUp);
             }, { once: true });
         };
 
         const handleEsc = (e) => {
-            if (e.key === 'Escape') {
-                closeOverlay();
+            if (document.activeElement && ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+            if (e.key === 'Escape' || e.key === 'Esc') closeOverlay();
+            else if (e.key === '+' || e.key === '=') zoomInBtn.click();
+            else if (e.key === '-' || e.key === '_') zoomOutBtn.click();
+            else if (e.key === '0' || e.key === 'r') resetView();
+            else if (e.key.startsWith('Arrow')) {
+                e.preventDefault();
+                if (scale > 1) {
+                    const p = 30;
+                    if (e.key === 'ArrowUp') translateY += p;
+                    if (e.key === 'ArrowDown') translateY -= p;
+                    if (e.key === 'ArrowLeft') translateX += p;
+                    if (e.key === 'ArrowRight') translateX -= p;
+                    render();
+                }
             }
         };
 
-        // Mouse wheel zoom (desktop)
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
         overlay.addEventListener('wheel', (e) => {
             e.preventDefault();
-            const delta = e.deltaY < 0 ? 1.15 : 0.87;
-            zoomAtPoint(delta, e.clientX, e.clientY);
+            zoomAtPoint(e.deltaY < 0 ? 1.15 : 0.87, e.clientX, e.clientY);
         }, { passive: false });
-
-        // Double-click zoom toggle (desktop)
         overlay.addEventListener('dblclick', (e) => {
             e.preventDefault();
-            if (scale === 1) {
-                zoomAtPoint(2, e.clientX, e.clientY);
-            } else {
-                resetView();
-            }
+            scale === 1 ? zoomAtPoint(2, e.clientX, e.clientY) : resetView();
         });
 
-        // Drag to pan (mouse)
-        stage.addEventListener('mousedown', (e) => {
-            if (scale <= 1) return;
-            isPanning = true;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            stage.style.cursor = 'grabbing';
-        });
-        window.addEventListener('mousemove', (e) => {
+        const handleMouseMove = (e) => {
             if (!isPanning) return;
-            translateX += e.clientX - lastX;
-            translateY += e.clientY - lastY;
-            lastX = e.clientX;
-            lastY = e.clientY;
-            render();
-        });
-        window.addEventListener('mouseup', () => {
+            const dx = e.clientX - lastX, dy = e.clientY - lastY;
+            lastX = e.clientX; lastY = e.clientY;
+            if (panAnimationId) cancelAnimationFrame(panAnimationId);
+            panAnimationId = requestAnimationFrame(() => {
+                translateX += dx; translateY += dy; render(); panAnimationId = null;
+            });
+        };
+        const handleMouseUp = () => {
             isPanning = false;
             stage.style.cursor = scale > 1 ? 'grab' : 'default';
-        });
+            if (panAnimationId) { cancelAnimationFrame(panAnimationId); panAnimationId = null; }
+        };
 
-        // Touch: double-tap to zoom, pinch to zoom, single-finger pan
+        stage.addEventListener('mousedown', (e) => {
+            if (scale <= 1) return;
+            isPanning = true; lastX = e.clientX; lastY = e.clientY;
+            stage.style.cursor = 'grabbing';
+        });
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+
+        // Touch events
         overlay.addEventListener('touchstart', (e) => {
             if (e.touches.length === 1) {
-                // double-tap detection
                 if (doubleTapTimeout) {
-                    clearTimeout(doubleTapTimeout);
-                    doubleTapTimeout = null;
+                    clearTimeout(doubleTapTimeout); doubleTapTimeout = null;
                     const t = e.touches[0];
-                    if (scale === 1) {
-                        zoomAtPoint(2, t.clientX, t.clientY);
-                    } else {
-                        resetView();
-                    }
+                    scale === 1 ? zoomAtPoint(2, t.clientX, t.clientY) : resetView();
                 } else {
-                    doubleTapTimeout = setTimeout(() => {
-                        doubleTapTimeout = null;
-                    }, 250);
+                    doubleTapTimeout = setTimeout(() => { doubleTapTimeout = null; }, 250);
                 }
             }
             if (e.touches.length === 2) {
@@ -358,45 +373,31 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.touches.length === 1 && scale > 1) {
                 const t = e.touches[0];
                 if (lastX !== null && lastY !== null) {
-                    translateX += t.clientX - lastX;
-                    translateY += t.clientY - lastY;
-                    render();
+                    translateX += t.clientX - lastX; translateY += t.clientY - lastY; render();
                 }
-                lastX = t.clientX;
-                lastY = t.clientY;
+                lastX = t.clientX; lastY = t.clientY;
             } else if (e.touches.length === 2) {
                 e.preventDefault();
                 const [t1, t2] = e.touches;
-                const currentDistance = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
-                if (lastTouchDistance) {
-                    const deltaScale = currentDistance / lastTouchDistance;
-                    const centerX = (t1.clientX + t2.clientX) / 2;
-                    const centerY = (t1.clientY + t2.clientY) / 2;
-                    zoomAtPoint(deltaScale, centerX, centerY);
-                }
-                lastTouchDistance = currentDistance;
+                const d = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+                if (lastTouchDistance) zoomAtPoint(d / lastTouchDistance, (t1.clientX + t2.clientX) / 2, (t1.clientY + t2.clientY) / 2);
+                lastTouchDistance = d;
             }
         }, { passive: false });
 
-        overlay.addEventListener('touchend', () => {
-            lastTouchDistance = null;
-            lastX = null;
-            lastY = null;
-        });
+        overlay.addEventListener('touchend', () => { lastTouchDistance = null; lastX = null; lastY = null; });
 
         zoomInBtn.addEventListener('click', () => {
-            const rect = stage.getBoundingClientRect();
-            zoomAtPoint(1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            const r = stage.getBoundingClientRect();
+            zoomAtPoint(1.2, r.left + r.width / 2, r.top + r.height / 2);
         });
         zoomOutBtn.addEventListener('click', () => {
-            const rect = stage.getBoundingClientRect();
-            zoomAtPoint(0.83, rect.left + rect.width / 2, rect.top + rect.height / 2);
+            const r = stage.getBoundingClientRect();
+            zoomAtPoint(0.83, r.left + r.width / 2, r.top + r.height / 2);
         });
         resetBtn.addEventListener('click', resetView);
-
         closeButton.addEventListener('click', closeOverlay);
 
-        // Prevent background scroll/zoom on touch devices
         overlay.addEventListener('touchmove', (e) => {
             if (e.touches.length < 2 && scale === 1) return;
             e.preventDefault();
@@ -407,56 +408,51 @@ document.addEventListener("DOMContentLoaded", () => {
         overlay.appendChild(closeButton);
         document.body.appendChild(overlay);
         document.body.classList.add('no-scroll');
-
-        // Trigger the fade-in animation
-        requestAnimationFrame(() => {
-            overlay.classList.add('visible');
-        });
-
+        requestAnimationFrame(() => overlay.classList.add('visible'));
         document.addEventListener('keydown', handleEsc);
         render();
     };
 
     document.querySelectorAll('.blog-content img').forEach(image => {
-        let touchStartTime = 0;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let hasMoved = false;
+        let touchStartTime = 0, touchStartX = 0, touchStartY = 0, hasMoved = false;
 
-        image.addEventListener('click', (e) => {
-            openImageModal(e.currentTarget.src);
-        });
+        image.addEventListener('click', (e) => openImageModal(e.currentTarget.src));
 
         image.addEventListener('touchstart', (e) => {
             touchStartTime = Date.now();
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
+            touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
             hasMoved = false;
         }, { passive: true });
 
         image.addEventListener('touchmove', (e) => {
             if (e.touches.length === 1) {
-                const touch = e.touches[0];
-                const deltaX = Math.abs(touch.clientX - touchStartX);
-                const deltaY = Math.abs(touch.clientY - touchStartY);
-                
-                // If the touch has moved more than 10px, consider it a scroll
-                if (deltaX > 10 || deltaY > 10) {
-                    hasMoved = true;
-                }
+                const t = e.touches[0];
+                if (Math.abs(t.clientX - touchStartX) > 10 || Math.abs(t.clientY - touchStartY) > 10) hasMoved = true;
             }
         }, { passive: true });
 
         image.addEventListener('touchend', (e) => {
-            const touchDuration = Date.now() - touchStartTime;
-            const deltaX = Math.abs(e.changedTouches[0].clientX - touchStartX);
-            const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
-            
-            // Only open zoom if it was a quick tap (less than 300ms) and didn't move much
-            if (touchDuration < 300 && !hasMoved && deltaX < 10 && deltaY < 10) {
-                e.preventDefault();
-                openImageModal(image.src);
+            const dur = Date.now() - touchStartTime;
+            const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+            if (dur < 300 && !hasMoved && dx < 10 && dy < 10) {
+                e.preventDefault(); openImageModal(image.src);
             }
         }, { passive: false });
     });
+
+    // ═══════════════════════════════════════════════════════════
+    // Projects Section Scroll Animation
+    // ═══════════════════════════════════════════════════════════
+    const projectCards = document.querySelectorAll('.project-card');
+    const projectObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    projectCards.forEach(card => projectObserver.observe(card));
 });
