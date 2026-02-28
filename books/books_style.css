@@ -1,15 +1,22 @@
+@font-face {
+    font-family: 'ABCMarist';
+    /* set name */
+    src: url(../font/ABCMarist-Book-Trial.otf) format('opentype');
+    /* url of the font */
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    background-color: #f7f7f7;
+    background-color: #ffffff;
     color: #333333;
-    font-family: 'Merriweather', 'Georgia', serif;
+    font-family: 'ABCMarist', 'Merriweather', 'Georgia', serif;
     line-height: 1.8;
     margin: 0;
     padding: 0;
-    font-size: 18px;
+    font-size: 25px;
 }
 
 .container {
@@ -59,7 +66,7 @@ body {
 }
 
 .book-title a:hover {
-    color: #ed7d31;
+    color: #c9a96e;
     text-decoration: none;
 }
 
@@ -76,7 +83,7 @@ body {
 }
 
 .book-author a:hover {
-    color: #ed7d31;
+    color: #c9a96e;
     text-decoration: underline;
 }
 
@@ -109,6 +116,16 @@ body {
     transition: all 0.6s ease;
 }
 
+.stars-link {
+    text-decoration: none;
+    display: inline-flex;
+    transition: transform 0.2s ease;
+}
+
+.stars-link:hover {
+    transform: scale(1.1);
+}
+
 .rating-label {
     font-size: 12px;
     font-weight: 800;
@@ -122,14 +139,14 @@ body {
     color: #1a1a1a;
     font-size: 20px;
     letter-spacing: 4px;
-    margin-right: 18px;
     line-height: 1;
-    transition: transform 0.3s ease;
+    transition: color 0.2s ease;
 }
 
-.book-rating:hover .stars {
-    transform: scale(1.05);
+.stars-link:hover .stars {
+    color: #000;
 }
+
 
 .rating-link {
     display: none;
@@ -137,7 +154,7 @@ body {
     font-weight: 800;
     color: #fff;
     text-decoration: none;
-    background: linear-gradient(135deg, #ed7d31 0%, #d85d0d 100%);
+    background: linear-gradient(135deg, #c9a96e 0%, #c9a96e 100%);
     padding: 6px 16px;
     border-radius: 20px;
     transition: all 0.3s ease;
@@ -145,7 +162,7 @@ body {
 }
 
 .rating-link:hover {
-    background: linear-gradient(135deg, #f78d45 0%, #e56a16 100%);
+    background: linear-gradient(135deg, #c9a96e 0%, #c9a96e 100%);
     box-shadow: 0 6px 15px rgba(237, 125, 49, 0.4);
     transform: translateY(-1px);
 }
@@ -180,6 +197,7 @@ p {
 
 /* Blockquote styling */
 blockquote {
+    font-family: serif;
     font-size: 24px;
     font-style: italic;
     font-weight: 700;
@@ -198,7 +216,7 @@ blockquote::before {
     left: 10px;
     top: -20px;
     font-size: 100px;
-    color: #F87D39;
+    color: #c9a96e;
     /* Orange matching the image */
     line-height: 1;
     font-style: normal;
@@ -219,7 +237,7 @@ blockquote::before {
 }
 
 .review-footer a:hover {
-    color: #ed7d31;
+    color: #c9a96e;
 }
 
 /* Responsive Media Queries */

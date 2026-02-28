@@ -4,12 +4,12 @@
 
 @font-face {
     font-family: 'Bookerly';
-    src: url(/font/Bookerly.ttf) format('truetype');
+    src: url(../font/Bookerly.ttf) format('truetype');
 }
 
 @font-face {
     font-family: 'Bookerly Bold';
-    src: url(/font/Bookerly-Bold.ttf) format('truetype');
+    src: url(../font/Bookerly-Bold.ttf) format('truetype');
 }
 
 /* ── Header / Hero ── */
