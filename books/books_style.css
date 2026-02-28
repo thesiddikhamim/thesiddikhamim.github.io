@@ -274,7 +274,10 @@ blockquote::before {
     p {
         font-size: 18px;
         margin-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
+
 
     .content>p:first-of-type::first-letter {
         font-size: 60px;
