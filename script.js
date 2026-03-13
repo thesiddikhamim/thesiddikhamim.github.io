@@ -455,4 +455,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
     projectCards.forEach(card => projectObserver.observe(card));
+
+    // ═══════════════════════════════════════════════════════════
+    // Hero Background Parallax (Premium Interaction)
+    // ═══════════════════════════════════════════════════════════
+    const hero = document.querySelector('header');
+    const spotlight = document.querySelector('.gradient-bg .spotlight-wrapper');
+    
+    if (hero && spotlight && window.innerWidth > 1024) {
+        let mouseX = 0, mouseY = 0;
+        let currentX = 0, currentY = 0;
+        const dampening = 0.05;
+
+        window.addEventListener('mousemove', (e) => {
+            // Calculate normalized position (-1 to 1)
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        const animateSpotlight = () => {
+            // Smoothly interpolate current position toward target mouse position
+            currentX += (mouseX - currentX) * dampening;
+            currentY += (mouseY - currentY) * dampening;
+
+            // Apply transform. Note: we need to keep the translateX(-50%) from CSS
+            // but add our parallax offset on top.
+            const moveX = currentX * 30; // 30px max horizontal shift
+            const moveY = currentY * 20; // 20px max vertical shift
+            
+            spotlight.style.transform = `translateX(calc(-50% + ${moveX}px)) translateY(${moveY}px)`;
+            
+            requestAnimationFrame(animateSpotlight);
+        };
+
+        animateSpotlight();
+    }
 });
