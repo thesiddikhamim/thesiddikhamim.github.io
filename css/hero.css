@@ -88,9 +88,10 @@ header p {
     color: var(--text-secondary);
     margin-bottom: 0.5rem;
     max-width: 95%;
-    font-family: 'Geist Mono', 'DM sans', 'Merriweather';
+    font-family: 'Source Serif 4', serif;
     font-size: 1.2rem;
     font-weight: 500;
+    font-style: normal;
 }
 
 /* Animations */
