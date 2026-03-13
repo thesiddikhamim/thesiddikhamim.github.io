@@ -281,134 +281,131 @@ h3 {
     }
 }
 
-/* ── Show More Button ── */
+/* ── Show More Button (Redesigned: Minimalist Arrow Focus) ── */
 .show-more-button {
+    position: relative;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 3rem auto 0;
-    padding: 12px 28px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 100px;
+    margin: 2rem auto 0;
+    padding: 20px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     font-family: 'Inter', sans-serif;
-    gap: 12px;
-    position: relative;
-    overflow: hidden;
-}
-
-.show-more-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--accent-light);
-    opacity: 0;
-    z-index: 0;
-    transition: opacity 0.3s ease;
-}
-
-.show-more-button:hover {
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.show-more-button:hover::before {
-    opacity: 0.03;
+    transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
+    z-index: 10;
 }
 
 .show-more-button .button-text {
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s ease;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+    margin-bottom: 8px; /* Making it "so close" to the arrow */
+    opacity: 0.8;
 }
 
 .show-more-button .button-icon {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    z-index: 1;
-    color: var(--accent);
-    font-size: 0.75rem;
+    width: 1px;
+    height: 60px; /* Long editorial line */
+    background: var(--border-subtle);
+    transition: all 0.6s cubic-bezier(0.2, 0, 0, 1);
+    display: flex;
+    justify-content: center;
+}
+
+/* The "Arrow Head" */
+.show-more-button .button-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent);
+    transform: rotate(45deg);
+    transition: all 0.5s cubic-bezier(0.2, 0, 0, 1);
+    transform-origin: center;
+}
+
+/* Hover Interaction: The "Advance" feel */
+.show-more-button:hover {
+    transform: translateY(5px);
 }
 
 .show-more-button:hover .button-text {
     color: var(--accent);
+    letter-spacing: 0.6em;
+    opacity: 1;
+    transform: translateY(-5px);
 }
 
-.show-more-button:active {
-    transform: translateY(-1px);
+.show-more-button:hover .button-icon {
+    height: 80px; /* Line stretches */
+    background: var(--accent);
 }
 
+.show-more-button:hover .button-icon::after {
+    width: 12px;
+    height: 12px;
+    bottom: -2px;
+}
+
+/* Expand State (when "less") */
 .show-more-button.less .button-icon {
     transform: rotate(180deg);
 }
 
+.show-more-button.less .button-text {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+/* Loading State */
 .show-more-button.loading {
     pointer-events: none;
-    opacity: 0.8;
 }
 
 .show-more-button.loading .button-icon {
-    animation: spin 1s linear infinite;
+    height: 40px;
+    animation: pulseLine 1.5s ease-in-out infinite;
 }
 
-.show-more-button.loading .button-icon i {
-    display: none;
+@keyframes pulseLine {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+    50% { opacity: 1; transform: scaleY(1.2); }
 }
 
-.show-more-button.loading .button-icon::after {
-    content: '';
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border: 2px solid transparent;
-    border-top: 2px solid var(--accent);
-    border-radius: 50%;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Progress indicator */
+/* Progress indicator - Minimalist integration */
 .certificates-progress {
-    width: 100%;
-    height: 3px;
+    width: 60px; /* Much smaller, centered */
+    height: 1px;
     background-color: var(--border-subtle);
-    border-radius: 100px;
-    margin: 3rem auto 2rem;
-    overflow: hidden;
-    max-width: 400px;
+    margin: 4rem auto 0;
+    overflow: visible;
 }
 
 .certificates-progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-light));
-    border-radius: 10px;
+    background: var(--accent);
     transition: width 0.7s cubic-bezier(0.19, 1, 0.22, 1);
     width: 0%;
+    box-shadow: 0 0 15px var(--accent);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .show-more-button .button-icon {
+        height: 40px;
+    }
+    .show-more-button:hover .button-icon {
+        height: 50px;
+    }
 }
 
 /* Responsive adjustments */

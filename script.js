@@ -172,10 +172,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const updateButtonState = () => {
             const buttonText = showMoreBtn.querySelector('.button-text');
             if (currentlyVisible >= allCards.length) {
-                buttonText.textContent = 'View Less';
+                buttonText.textContent = 'Show Less';
                 showMoreBtn.classList.add('less');
             } else {
-                buttonText.textContent = 'View More';
+                buttonText.textContent = 'Explore More';
                 showMoreBtn.classList.remove('less');
             }
         };
