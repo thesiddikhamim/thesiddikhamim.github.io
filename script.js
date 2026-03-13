@@ -49,24 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('scroll', updateNavbar, { passive: true });
     updateNavbar();
 
-    // ═══════════════════════════════════════════════════════════
-    // Accordion
-    // ═══════════════════════════════════════════════════════════
-    const accordionHeaders = document.querySelectorAll(".accordion-header");
-    accordionHeaders.forEach(header => {
-        header.addEventListener("click", () => {
-            const currentItem = header.parentElement;
-            const wasActive = currentItem.classList.contains("active");
-
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            if (!wasActive) {
-                currentItem.classList.add("active");
-            }
-        });
-    });
 
     // ═══════════════════════════════════════════════════════════
     // Mobile Navigation
