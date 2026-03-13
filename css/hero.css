@@ -279,8 +279,8 @@ header p {
     }
 
     .header-image img {
-        width: 75%;
-        max-width: 260px;
+        width: 95%;
+        max-width: 290px;
         height: auto;
         max-height: 40vh;
         object-position: center;
