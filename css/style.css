@@ -160,11 +160,11 @@ h3 {
 }
 
 .certificate-card h3 {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     margin: 0 0 8px 0;
     color: var(--text-primary);
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
+    font-family: 'Denton Condensed Test', serif;
+    font-weight: 700;
     letter-spacing: -0.01em;
     line-height: 1.3;
 }
