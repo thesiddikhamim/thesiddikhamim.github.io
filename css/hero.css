@@ -220,13 +220,13 @@ header h2 {
 }
 
 header p {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     line-height: 1.85;
     color: rgba(232, 224, 212, 0.5);
     margin-bottom: 2rem;
     max-width: 95%;
-    font-family: 'Source Serif 4', sans-serif;
-    font-weight: 400;
+    font-family: 'inter', 'Source Serif 4', sans-serif;
+    font-weight: 300;
 }
 
 
