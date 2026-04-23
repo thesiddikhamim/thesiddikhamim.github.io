@@ -3,13 +3,25 @@
    ═══════════════════════════════════════════════════════════ */
 
 @font-face {
-    font-family: 'Bookerly';
-    src: url(../font/Bookerly.ttf) format('truetype');
+    font-family: 'Denton Condensed Test';
+    src: url('font/DentonCondensedTest-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Denton Condensed Test';
+    src: url('font/DentonCondensedTest-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
 }
 
 @font-face {
-    font-family: 'Bookerly Bold';
-    src: url(../font/Bookerly-Bold.ttf) format('truetype');
+    font-family: 'Denton Condensed Test';
+    src: url('font/DentonCondensedTest-BlackItalic.otf') format('opentype');
+    font-weight: 900;
+    font-style: italic;
 }
 
 /* ── Header / Hero ── */
@@ -208,13 +220,13 @@ header h2 {
 }
 
 header p {
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1.85;
     color: rgba(232, 224, 212, 0.5);
     margin-bottom: 2rem;
     max-width: 95%;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-family: 'inter', 'Source Serif 4', sans-serif;
+    font-weight: 300;
 }
 
 
@@ -249,13 +261,13 @@ header p {
         flex-direction: column-reverse;
         height: auto;
         min-height: 100vh;
-        justify-content: center;
-        padding: 2rem 0;
+        justify-content: flex-end;
+        padding: 0.5rem 0 3rem 0;
     }
 
     .header-content {
         width: 100%;
-        padding: 2rem 1.5rem;
+        padding: 1rem 1.5rem;
         text-align: center;
     }
 
@@ -263,7 +275,7 @@ header p {
         width: 100%;
         height: auto;
         justify-content: center;
-        padding: 0 1.5rem;
+        padding: 1rem 1.5rem 0 1.5rem;
     }
 
     .header-image img {
@@ -314,6 +326,7 @@ header p {
         flex-direction: column-reverse;
         height: auto;
         min-height: 100vh;
+        justify-content: flex-end;
     }
 
     .header-content {
