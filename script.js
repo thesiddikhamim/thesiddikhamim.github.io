@@ -49,24 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('scroll', updateNavbar, { passive: true });
     updateNavbar();
 
-    // ═══════════════════════════════════════════════════════════
-    // Accordion
-    // ═══════════════════════════════════════════════════════════
-    const accordionHeaders = document.querySelectorAll(".accordion-header");
-    accordionHeaders.forEach(header => {
-        header.addEventListener("click", () => {
-            const currentItem = header.parentElement;
-            const wasActive = currentItem.classList.contains("active");
-
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('active');
-            });
-
-            if (!wasActive) {
-                currentItem.classList.add("active");
-            }
-        });
-    });
 
     // ═══════════════════════════════════════════════════════════
     // Mobile Navigation
@@ -172,10 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const updateButtonState = () => {
             const buttonText = showMoreBtn.querySelector('.button-text');
             if (currentlyVisible >= allCards.length) {
-                buttonText.textContent = 'View Less';
+                buttonText.textContent = 'Show Less';
                 showMoreBtn.classList.add('less');
             } else {
-                buttonText.textContent = 'View More';
+                buttonText.textContent = 'Explore More';
                 showMoreBtn.classList.remove('less');
             }
         };
