@@ -1,8 +1,5 @@
 
-@font-face {
-  font-family: 'Bookerly'; /* set name */
-  src: url(/font/Bookerly.ttf) format('truetype'); /* url of the font */
-}
+
 .blog-container {
     max-width: 800px;
     margin: 0 auto; /* Center the container */
@@ -11,14 +8,17 @@
 }
 
 .blog-header h1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Denton Condensed Test', sans-serif;
+    font-weight: 900;
     font-size: 2.5rem;
     margin-bottom: 2rem;
     /* Space after the title */
 }
 
+.blog-container h2,
 .blog-container h3 {
-    font-family: 'Merriweather','Poppins', sans-serif;
+    font-family: 'Denton Condensed Test', sans-serif;
+    font-weight: 900;
     font-size: 2rem;
     margin-bottom: 2rem;
     text-align: center;
@@ -34,6 +34,8 @@
 }
 
 .blog-content p {
+    font-family: 'Source Serif 4','Denton Condensed Test', serif;
+    font-weight: bold; /* Using the bold weight provided */
     line-height: 1.8;
     margin-bottom: 1.5rem;
     font-size: 1.1rem;

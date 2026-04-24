@@ -2,27 +2,7 @@
    HERO — Editorial Warm Dark Theme with Spotlight
    ═══════════════════════════════════════════════════════════ */
 
-@font-face {
-    font-family: 'Denton Condensed Test';
-    src: url('font/DentonCondensedTest-Bold.otf') format('opentype');
-    font-weight: bold;
-    font-style: normal;
-}
 
-
-@font-face {
-    font-family: 'Denton Condensed Test';
-    src: url('font/DentonCondensedTest-Black.otf') format('opentype');
-    font-weight: 900;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Denton Condensed Test';
-    src: url('font/DentonCondensedTest-BlackItalic.otf') format('opentype');
-    font-weight: 900;
-    font-style: italic;
-}
 
 /* ── Header / Hero ── */
 header {

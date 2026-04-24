@@ -12,6 +12,28 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Denton Condensed Test';
+    src: url('../font/DentonCondensedTest-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Denton Condensed Test';
+    src: url('../font/DentonCondensedTest-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Denton Condensed Test';
+    src: url('../font/DentonCondensedTest-BlackItalic.otf') format('opentype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+
 
 :root {
     --bg-primary: #0c0b09;
@@ -561,7 +583,7 @@ h3 {
 }
 
 .project-title-link h3 {
-    font-family: 'ABC Marist', serif;
+    font-family: 'Denton Condensed Test', 'ABC Marist', serif;
     font-size: 1.25rem;
     font-weight: 500;
     color: var(--text-primary);
