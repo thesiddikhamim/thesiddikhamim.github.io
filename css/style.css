@@ -168,10 +168,10 @@ h3 {
 }
 
 .certificate-card h3 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin: 0 0 8px 0;
     color: var(--text-primary);
-    font-family: 'ABC Marist', serif;
+    font-family: JETBrains Mono,'ABC Marist', serif;
     font-weight: 400;
     letter-spacing: -0.01em;
     line-height: 1.3;
